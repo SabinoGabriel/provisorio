@@ -5,9 +5,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --bg-primary: #8E4BF2;
+  --bg-primary-hover: #7a3ee0;
+  --secondary: #3D7CDB;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: white) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;

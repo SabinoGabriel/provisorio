@@ -11,6 +11,9 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "var(--bg-primary)",
+        primaryhover: "var(--bg-primary-hover)",
+        secondary: "var(--secondary)",
       },
     },
   },

@@ -1,13 +1,20 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { Button } from '@/components/ui/Button'
+import { Card } from '@/components/ui/Card'
+import { Input } from '@/components/ui/Input'
 
 export default function Home() {
     return (
         <div className='w-full h-screen items-center justify-center flex flex-col space-y-16 p-10'>
             <Image src='/images/seed-a-bit.png' alt='Seed a Bit - logo' width={500} height={175} priority loading='eager' quality={100} />
+            <Button>primary button</Button>
+            <Button variant={'outline'}>secondary button</Button>
+            <Button variant={'link'}>link button</Button>
+            <Card>Card Example</Card>
+            <Input></Input>
             <div className='flex flex-col space-y-1.5 items-center justify-center text-center'>
-                <h1 className='text-3xl font-medium'>Este é o template da empresa para websites.</h1>
-                <p className='w-[80%]'>Tudo o que você precisa pode ser encontrado no arquivo <code>README.md</code> deste repositório.</p>
+                <h1>Psicólogos no Nordeste</h1>
             </div>
             <div>
                 <Link
