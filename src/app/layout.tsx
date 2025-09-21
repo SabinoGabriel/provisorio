@@ -13,14 +13,14 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-    title: 'Nome do App',
-    description: 'Descrição do App',
-    applicationName: 'Nome do App',
+    title: 'Psicólogos NE',
+    description: 'Aplicação para psicólogos do Nordeste',
+    applicationName: 'Psicólogos NE',
     authors: [{ url: 'https://seedabit.org.br', name: 'Seed a Bit' }],
-    keywords: ['palavra-chave', 'palavra-chave'],
+    keywords: ['psicólogos', 'nordeste', 'saúde mental', 'psicologia'],
     creator: 'Seed a Bit',
     publisher: 'Seed a Bit',
-    abstract: 'Descrição do App',
+    abstract: 'Aplicação para psicólogos do Nordeste',
 }
 
 export default function RootLayout({
