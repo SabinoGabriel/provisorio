@@ -9,21 +9,21 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 - [TechStack](#techstack)
 - [Getting Started](#getting-started)
-    - [API Routes](#api-routes)
+  - [API Routes](#api-routes)
 - [Learn More](#learn-more)
-    - [Next.js](#nextjs)
-    - [React](#react)
-    - [TailwindCSS](#tailwindcss)
-    - [Eslint](#eslint)
-    - [Husky](#husky)
+  - [Next.js](#nextjs)
+  - [React](#react)
+  - [TailwindCSS](#tailwindcss)
+  - [Eslint](#eslint)
+  - [Husky](#husky)
 - [On commits, branches, and PRs](#on-commits-branches-and-prs)
 - [On Deploying](#on-deploying)
 - [Code Rules and Guidelines](#code-rules-and-guidelines)
-    - [Directory Structure](#directory-structure)
-    - [Naming Conventions](#naming-conventions)
-    - [Code Details](#code-details)
-    - [Styling Conventions](#styling-conventions)
-    - [Extra](#extra)
+  - [Directory Structure](#directory-structure)
+  - [Naming Conventions](#naming-conventions)
+  - [Code Details](#code-details)
+  - [Styling Conventions](#styling-conventions)
+  - [Extra](#extra)
 - [Library Recommendations](#library-recommendations)
 - [VSCode Extensions](#vscode-extensions)
 - [License](#license)
@@ -138,7 +138,7 @@ For commits, branches, and PRs, follow the guidelines below:
 
 - **PRs**: Always create a PR to merge with the `dev` branch. Never merge directly to the `main` branch. Assume the `main` branch is the production branch.
 - **Branches**: Create branches for each feature or bug fix. Use the format `feature/feature-name`, `bugfix/bug-name`, `issue/issue-number`, etc.
-- **Commits**: Use the [Conventional Commits](https://github.com/iuricode/padroes-de-commits) format for commits.  It's recommended to add a bigger description to the commit message for better understanding. E.g. `git commit -m "feat(login): added login" -m "Added login feature using the firebase auth api`.
+- **Commits**: Use the [Conventional Commits](https://github.com/iuricode/padroes-de-commits) format for commits. It's recommended to add a bigger description to the commit message for better understanding. E.g. `git commit -m "feat(login): added login" -m "Added login feature using the firebase auth api`.
 
 > [!NOTE]
 > Commits are checked and validated by Husky and Lint-staged tested. Make sure to fix all errors before pushing your code.
@@ -165,16 +165,16 @@ There is an always existing environment variable in all Node projects `NODE_ENV`
 Maintain the defined directory system for better organization and maintainability, each directory has a specific purpose:
 
 - `src/app/`: Contains all the application pages
-    - `src/app/api`: Contains all the API routes if needed.
+  - `src/app/api`: Contains all the API routes if needed.
 - `src/components`: Contains all the components used in the project.
-    - `src/components/core`: Contains all the core components used in the project.
-    - `src/components/ui`: Contains all the UI components used in the project.
+  - `src/components/core`: Contains all the core components used in the project.
+  - `src/components/ui`: Contains all the UI components used in the project.
 - `src/hooks`: Contains all the custom hooks used in the project.
 - `src/services`: Contains all the services used in the project.
 - `src/tests`: Contains all the tests for the project.
 - `src/types`: Contains all the types used in the project.
 - `src/utils`: Contains all the utility functions used in the project.
-    - `src/utils/lib`: Contains all the library functions used in the project.
+  - `src/utils/lib`: Contains all the library functions used in the project.
 - `src/data`: Contains all the data used in the project.
 
 ### Naming Conventions
@@ -188,9 +188,10 @@ Maintain the defined directory system for better organization and maintainabilit
 - Use `const` for variables for safety, if possible.
 - Keep functions clear and concise. If a function is too long, consider breaking it down into smaller functions.
 - Always add documentation to functions (if not self-explanatory).
-    - E.g.
-    ```typescript
-    function func(a: number, b: number): number {
+  - E.g.
+
+  ```typescript
+  function func(a: number, b: number): number {
     /**
      * Simple function explanation.
      *
@@ -204,13 +205,14 @@ Maintain the defined directory system for better organization and maintainabilit
      *
      * @throws {TypeError} If the parameters are not numbers.
      */
-        if (typeof a !== 'number' || typeof b !== 'number') {
-            throw new TypeError('Parameters must be numbers.')
-        }
-
-        return a + b
+    if (typeof a !== "number" || typeof b !== "number") {
+      throw new TypeError("Parameters must be numbers.");
     }
-    ```
+
+    return a + b;
+  }
+  ```
+
 - Always type your variables and functions with TypeScript.
 - Use `null` instead of `undefined` for uninitialized variables. Keep your intent clear.
 - Use `===` instead of `==` for comparison. `===` is more strict and prevents type coercion.
@@ -221,7 +223,7 @@ Maintain the defined directory system for better organization and maintainabilit
 ### Styling Conventions
 
 - Use TailwindCSS classes for styling instead of pixel values. Fixed values aren't responsive and can cause issues on different screen sizes.
-    - E.g. `w-1/2` instead of `width: 200px`.
+  - E.g. `w-1/2` instead of `width: 200px`.
 - Prefer using `flex` and `grid` for layout instead of `float` and `position`.
 - Use `gap-{value}` or `space-y-{value}` instead of `margin`/`padding` for spacing between elements. Keeps the code cleaner, readable, and responsive.
 - Use `!important` ONLY when necessary. It can cause specificity issues and make the code harder to maintain.

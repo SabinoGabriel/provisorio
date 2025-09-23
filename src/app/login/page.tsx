@@ -1,7 +1,10 @@
+import { LoginForm } from "@/components/auth/LoginForm";
+
 export default function LoginPage() {
-    return (
-        <div className='w-full h-screen items-center justify-center flex flex-col space-y-16 p-10'>
-            <h1 className='text-2xl font-bold'>Login Page</h1>
-        </div>
-    )
+  return (
+    // Centraliza o formulário na tela (mesma estrutura da branch funcional)
+    <main className="flex items-center justify-center min-h-screen">
+      <LoginForm />
+    </main>
+  );
 }
