@@ -12,21 +12,21 @@ Este é um projeto [Next.js](https://nextjs.org/) inicializado com [`create-next
 
 - [TechStack](#techstack)
 - [Primeiros Passos](#primeiros-passos)
-    - [Rotas de API](#rotas-de-api)
+  - [Rotas de API](#rotas-de-api)
 - [Saiba Mais](#saiba-mais)
-    - [Next.js](#nextjs)
-    - [React](#react)
-    - [TailwindCSS](#tailwindcss)
-    - [Eslint](#eslint)
-    - [Husky](#husky)
+  - [Next.js](#nextjs)
+  - [React](#react)
+  - [TailwindCSS](#tailwindcss)
+  - [Eslint](#eslint)
+  - [Husky](#husky)
 - [Commits, branches e PRs](#commits-branches-e-prs)
 - [Sobre o Deploy](#sobre-o-deploy)
 - [Regras e Diretrizes de Código](#regras-e-diretrizes-de-código)
-    - [Estrutura de Diretórios](#estrutura-de-diretórios)
-    - [Convenções de Nomeação](#convencoes-de-nomeação)
-    - [Detalhes do Código](#detalhes-do-codigo)
-    - [Convenções de Estilização](#convenções-de-estilização)
-    - [Extra](#extra)
+  - [Estrutura de Diretórios](#estrutura-de-diretórios)
+  - [Convenções de Nomeação](#convencoes-de-nomeação)
+  - [Detalhes do Código](#detalhes-do-codigo)
+  - [Convenções de Estilização](#convenções-de-estilização)
+  - [Extra](#extra)
 - [Recomendações de Bibliotecas](#recomendações-de-bibliotecas)
 - [Extensões para o VSCode](#extensões-para-o-vscode)
 - [Licença](#licença)
@@ -107,7 +107,6 @@ TailwindCSS é um framework CSS utilitário que permite a criação rápida de d
 - [Flexbox Cheatsheet](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) - um guia de referência para Flexbox.
 - [Grid Cheatsheet](https://css-tricks.com/snippets/css/complete-guide-grid/) - um guia de referência para Grid.
 
-
 > [!IMPORTANT]
 > A documentação do TailwindCSS é muito bem escrita e fácil de entender. Recomenda-se ler a documentação para entender melhor seus recursos e capacidades.
 
@@ -169,16 +168,16 @@ Há uma variável de ambiente sempre existente em todos projetos com Node, `NODE
 Mantenha a estrutura de diretórios do projeto para melhor organização e manutenção do código, cada diretório tem um propósito específico:
 
 - `src/app/`: Contém todas as páginas da aplicação
-    - `src/app/api`: Contém todas as rotas de API, se necessário.
+  - `src/app/api`: Contém todas as rotas de API, se necessário.
 - `src/components`: Contém todos os componentes usados no projeto.
-    - `src/components/core`: Contém componentes básicos (core).
-    - `src/components/ui`: Contém componentes de interface do usuário.
+  - `src/components/core`: Contém componentes básicos (core).
+  - `src/components/ui`: Contém componentes de interface do usuário.
 - `src/hooks`: Contém todos os hooks personalizados.
 - `src/services`: Contém todos os serviços usados no projeto.
 - `src/tests`: Contém todos os testes do projeto.
 - `src/types`: Contém todos os tipos de dados usados no projeto.
 - `src/utils`: Contém funções utilitárias.
-    - `src/utils/lib`: Contém funções utilitárias de bibliotecas externas.
+  - `src/utils/lib`: Contém funções utilitárias de bibliotecas externas.
 - `src/data`: Contém todos os dados/constantes usados no projeto.
 
 ### Convenções de Nomeação
@@ -192,9 +191,10 @@ Mantenha a estrutura de diretórios do projeto para melhor organização e manut
 - Use `const` para declaração de variáveis.
 - Mantenha as funções claras e concisas. Se uma função for muito longa, considere dividí-la em funções menores.
 - Sempre adicione documentação às funções (se as mesmas não forem autoexplicativas).
-    - Ex.
-    ```typescript
-    function func(a: number, b: number): number {
+  - Ex.
+
+  ```typescript
+  function func(a: number, b: number): number {
     /**
      * Uma explicação simples do que a função faz.
      *
@@ -208,13 +208,14 @@ Mantenha a estrutura de diretórios do projeto para melhor organização e manut
      *
      * @throws {TypeError} Se a ou b não forem números.
      */
-        if (typeof a !== 'number' || typeof b !== 'number') {
-            throw new TypeError('Os argumentos devem ser números.')
-        }
-
-        return a + b
+    if (typeof a !== "number" || typeof b !== "number") {
+      throw new TypeError("Os argumentos devem ser números.");
     }
-    ```
+
+    return a + b;
+  }
+  ```
+
 - Sempre dê tipo às variáveis e funções.
 - Use `null` ao invés de `undefined` para variáveis não inicializadas. Mantenha a sua intenção clara.
 - Use `===` ao invés de `==` para comparações. `===` é mais seguro e evita erros de tipo.
@@ -225,7 +226,7 @@ Mantenha a estrutura de diretórios do projeto para melhor organização e manut
 ### Convenções de Estilização
 
 - Use classes do TailwindCSS para estilização ao invés de valores em pixels. Valores fixos não são responsivos e podem quebrar o layout em diferentes tamanhos de tela.
-    - Ex. `w-1/2` ao invés de `width: 200px`.
+  - Ex. `w-1/2` ao invés de `width: 200px`.
 - Preferencialmente, use `flex` e `grid` para layouts ao invés de `float` e `position`.
 - Use `gap-{valor}` ou `space-y-{valor}` para espaçamento entre elementos ao invés de `margin` e `padding`. Mantém o código limpo, legível e de fácil de manutenção.
 - Use `!important` APENAS quando necessário. O seu uso pode causar problemas de especificidade e dificultar a manutenção do código.
