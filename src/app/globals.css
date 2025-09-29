@@ -8,6 +8,8 @@
   --bg-primary: #8e4bf2;
   --bg-primary-hover: #7a3ee0;
   --secondary: #3d7cdb;
+  --bg-input: #FBFCFD;
+  --stroke-input: #E1E7EF;
 }
 
 @media (prefers-color-scheme: white) {
@@ -20,5 +22,5 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Montserrat", sans-serif;
 }

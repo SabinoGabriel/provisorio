@@ -28,11 +28,11 @@ export function LoginForm() {
         <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="email">E-mail</Label>
-            <Input id="email" type="email" placeholder="Digite seu e-mail" />
+            <Input label="E-mail" id="email" type="email" placeholder="Digite seu e-mail" />
           </div>
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="password">Senha</Label>
-            <Input id="password" type="password" placeholder="Digite sua senha" />
+            <Input label="Senha" id="password" type="password" placeholder="Digite sua senha" />
             <Link href="/recuperar-senha"
               className="text-xs text-muted-foreground hover:underline text-right"
             >
