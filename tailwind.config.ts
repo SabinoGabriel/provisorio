@@ -14,6 +14,8 @@ export default {
         primary: "var(--bg-primary)",
         primaryhover: "var(--bg-primary-hover)",
         secondary: "var(--secondary)",
+        input: "var(--bg-input)",
+        strokeinput: "var(--stroke-input)",
       },
     },
   },
