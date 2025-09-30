@@ -17,6 +17,14 @@ export default {
         input: "var(--bg-input)",
         strokeinput: "var(--stroke-input)",
       },
+    // (1rem = 16px)
+      maxWidth: {
+        'email-form': '37.5rem',
+        'auth-form': '50rem', // 800px
+      },
+      minHeight: {
+        'email-form': '25rem',
+      },
     },
   },
   plugins: [],
