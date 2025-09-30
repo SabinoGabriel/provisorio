@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/Separator";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select"
+import { DatePickerInput } from "../ui/DatePicker";
 
 interface FormData {
   fullName: string;
@@ -44,6 +45,7 @@ export function RegisterForm() {
   const [formData, setFormData] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // função para atualizar os campos do formulário
   function setField(field: keyof FormData, value: string) {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
@@ -55,6 +57,7 @@ export function RegisterForm() {
     }
   }
 
+  // função para validar os campos do formulário
   function validate(): boolean {
     const requiredFields: (keyof FormData)[] = [
       "fullName",
@@ -91,13 +94,14 @@ export function RegisterForm() {
     return Object.keys(newErrors).length === 0;
   }
 
+  // função para submissão do formulário
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
     alert("Cadastro paciente submetido!");
   }
 
-  // função para adicionar progresso
+  // função para passar para a próxima etapa do formulário
   function handleNextStep() {
     if (progress < 100) {
       setProgress(progress + 50);
@@ -105,7 +109,7 @@ export function RegisterForm() {
     }
   }
 
-  // funcao para diminuir progresso
+  // funcao para voltar para a etapa anterior do formulário
   function handlePreviousStep() {
     if (progress == 100) {
       setProgress(progress - 50);
@@ -115,11 +119,14 @@ export function RegisterForm() {
 
   return (
     <div className="flex flex-col justify-center py-16">
+
       {/* Título e Descrição */}
-      <div className="text-center flex flex-col my-8 gap-2">
-        <h1 className="text-4xl text-white font-bold tracking-tight">Crie sua conta</h1>
-        <p className="text-md text-white text-muted-foreground">Comece sua jornada do cuidado</p>
+      <div className="text-center flex flex-col mb-16 gap-2">
+        <h1 className="text-4xl text-white font-semibold tracking-tight">Crie sua conta</h1>
+        <p className="text-2xl text-[#EEF5FF] font-normal text-muted-foreground">Comece sua jornada de cuidado conosco</p>
       </div>
+
+      {/* Container do Formulário */}
       <Card
         className="bg-white border border-[#E5E5E5]"
         style={{
@@ -128,42 +135,45 @@ export function RegisterForm() {
           boxSizing: "border-box",
           borderRadius: 24,
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)"
-        }}
-      >
+        }}>
+          
         {/* Título */}
         <h2 className="text-center text-2xl font-bold text-[#195FB5] mb-6">
           Cadastro
         </h2>
 
         {/* Toggle Paciente/Psicólogo - Barra única com botões internos */}
-        <div 
-          className="flex mb-6 p-1 rounded-2xl"
-        >
+        <div className="flex mb-6 p-1 rounded-2xl">
           <Tabs defaultValue="pacient" className="w-full">
-            <TabsList className="bg-[#F1F5F9] w-full p-1 rounded-2xl">
-              <TabsTrigger className="w-full text-[#9098a3]" value="pacient">Paciente</TabsTrigger>
-              <TabsTrigger className="w-full text-[#9098a3]" value="psychologist">Psicólogo</TabsTrigger>
+            <TabsList className="bg-[#F1F5F9] w-full p-1 h-14 rounded-2xl">
+              <TabsTrigger className="w-full h-12 text-[#9098a3]" value="pacient">Paciente</TabsTrigger>
+              <TabsTrigger className="w-full h-12 text-[#9098a3]" value="psychologist">Psicólogo</TabsTrigger>
             </TabsList>
+
+            {/* Formulário para Pacientes */}
             <TabsContent value="pacient">
               <form className="mt-4" onSubmit={handleSubmit}>
                 {/* Grid de campos conforme protótipo */}
                 <div className="grid grid-cols-2 gap-x-4 gap-y-5">
                   
-                  {/* Nome completo - linha inteira */}
-                  <ContainerInput title="Nome completo">
-                    <Input
-                      value={formData.fullName}
-                      onChange={(e) => setField("fullName", e.target.value)}
-                      placeholder="Digite seu nome completo"
-                      required
-                    />
+                  {/* Nome completo */}
+                  <div className="flex flex-col col-span-2">
+                    <ContainerInput className={errors.fullName && "border-red-300"} required title="Nome completo">
+                      <Input
+                        value={formData.fullName}
+                        onChange={(e) => setField("fullName", e.target.value)}
+                        placeholder="Digite seu nome completo"
+                        required
+                      />
+                    </ContainerInput>
+                    {/* Mensagem de erro */}
                     {errors.fullName && (
-                      <p className="text-xs text-red-500">{errors.fullName}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.fullName}</p>
                     )}
-                  </ContainerInput>
+                  </div>
 
-                  {/* Como você gostaria de ser chamado */}
-                  <ContainerInput className="col-span-1" title="Como você gostaria de ser chamado?">
+                  {/* Como você gostaria de ser chamado - Nome social */}
+                  <ContainerInput className="col-span-1 max-h-16" title="Como você gostaria de ser chamado?">
                       <Input
                         value={formData.socialName}
                         onChange={(e) => setField("socialName", e.target.value)}
@@ -173,137 +183,164 @@ export function RegisterForm() {
                   </ContainerInput>
 
                   {/* Gênero */}
-                  <ContainerInput className="col-span-1" title="Gênero">
-                    <Select onValueChange={(value) => setField("gender", value)} required>
-                      <SelectTrigger value={formData.gender}>
-                        <SelectValue placeholder="Selecione" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="feminino">Feminino</SelectItem>
-                        <SelectItem value="masculino">Masculino</SelectItem>
-                        <SelectItem value="nao-binario">Não-binário</SelectItem>
-                        <SelectItem value="prefiro-nao-dizer">Prefiro não dizer</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    {errors.gender && (
-                      <p className="text-xs text-red-500">{errors.gender}</p>
-                    )}
-                  </ContainerInput>
-
-                  {/* Telefone - linha inteira */}
-                  <ContainerInput title="Telefone">
-                    <div className="flex">
-                      <Select>
-                        <SelectTrigger className="w-12 mr-2">
-                          <SelectValue placeholder="+55" />
+                  <div className="flex flex-col col-span-1">
+                    <ContainerInput required className={errors.gender && "border-red-300"} title="Gênero">
+                      <Select onValueChange={(value) => setField("gender", value)} required>
+                        <SelectTrigger value={formData.gender}>
+                          <SelectValue placeholder="Selecione" />
                         </SelectTrigger>
                         <SelectContent className="bg-white">
-                          <SelectItem value="+55">+55</SelectItem>
-                          <SelectItem value="+1">+1</SelectItem>
-                          <SelectItem value="+44">+44</SelectItem>
-                          <SelectItem value="+61">+61</SelectItem>
+                          <SelectItem value="feminino">Feminino</SelectItem>
+                          <SelectItem value="masculino">Masculino</SelectItem>
+                          <SelectItem value="nao-binario">Não-binário</SelectItem>
+                          <SelectItem value="prefiro-nao-dizer">Prefiro não dizer</SelectItem>
                         </SelectContent>
                       </Select>
-                      <Input
-                        value={formData.phone}
-                        onChange={(e) => setField("phone", e.target.value)}
-                        placeholder="(99) 99999-9999"
-                        type="tel"
-                        pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
-                        required
-                      />
-                    </div>
-                    {errors.phone && (
-                      <p className="text-xs text-red-500">{errors.phone}</p>
+                    </ContainerInput>
+                    {/* Mensagem de erro */}
+                    {errors.gender && (
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.gender}</p>
                     )}
-                  </ContainerInput>
+                  </div>
+
+                  {/* Telefone */}
+                  <div className="flex flex-col col-span-2">
+                    <ContainerInput required className={errors.phone && "border-red-300"} title="Telefone">
+                      <div className="flex">
+                        {/* Seletor de código do país */}
+                        <Select>
+                          <SelectTrigger className="w-12 mr-2">
+                            <SelectValue placeholder="+55" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-white">
+                            <SelectItem value="+55">+55</SelectItem>
+                            <SelectItem value="+1">+1</SelectItem>
+                            <SelectItem value="+44">+44</SelectItem>
+                            <SelectItem value="+61">+61</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Input
+                          value={formData.phone}
+                          onChange={(e) => setField("phone", e.target.value)}
+                          placeholder="(99) 99999-9999"
+                          type="tel"
+                          pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
+                          required
+                        />
+                      </div>
+                    </ContainerInput>
+                    {/* Mensagem de erro */}
+                    {errors.phone && (
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.phone}</p>
+                    )}
+                  </div>
 
                   {/* Data de nascimento */}
-                  <ContainerInput className="col-span-1" title="Data de nascimento">
-                    <Input
-                      type="date"
-                      value={formData.birthDate}
-                      onChange={(e) => setField("birthDate", e.target.value)}
-                      required
-                    />
+                  <div className="flex flex-col col-span-1">
+                    <ContainerInput required className={errors.birthDate && "border-red-300"} title="Data de nascimento">
+                        {/* Seletor de Data */}
+                        <DatePickerInput
+                          id="birthDate"
+                          value={formData.birthDate}
+                          onChange={(date) => setField("birthDate", date)}
+                          placeholder="DD/MM/AAAA"
+                        />
+                    </ContainerInput>
+                    {/* Mensagem de erro */}
                     {errors.birthDate && (
-                      <p className="text-xs text-red-500">{errors.birthDate}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.birthDate}</p>
                     )}
-                  </ContainerInput>
+                  </div>
 
                   {/* CPF */}
-                  <ContainerInput className="col-span-1" title="CPF">
-                    <Input
-                      value={formData.cpf}
-                      onChange={(e) => setField("cpf", e.target.value)}
-                      placeholder="999.999.999-99"
-                      required
-                    />
+                  <div className="flex flex-col col-span-1">
+                    <ContainerInput required className={errors.cpf && "border-red-300"} title="CPF">
+                      <Input
+                        value={formData.cpf}
+                        onChange={(e) => setField("cpf", e.target.value)}
+                        placeholder="999.999.999-99"
+                        required
+                      />
+                    </ContainerInput>
+                    {/* Mensagem de erro */}
                     {errors.cpf && (
-                      <p className="text-xs text-red-500">{errors.cpf}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.cpf}</p>
                     )}
-                  </ContainerInput>
+                  </div>
 
-                  {/* Como você nos encontrou? + Select customizado */}
-                  <ContainerInput title="Como você nos encontrou?">
-                    <Select value={formData.howFoundUs} onValueChange={(value) => setField("howFoundUs", value)} required>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="google">Google</SelectItem>
-                        <SelectItem value="redes-sociais">Redes sociais</SelectItem>
-                        <SelectItem value="indicacao">Indicação</SelectItem>
-                        <SelectItem value="outros">Outros</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  {/* Como você nos encontrou? */}
+                  <div className="flex flex-col col-span-2">
+                    <ContainerInput required className={errors.howFoundUs && "border-red-300"} title="Como você nos encontrou?">
+                      <Select value={formData.howFoundUs} onValueChange={(value) => setField("howFoundUs", value)} required>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white">
+                          <SelectItem value="google">Google</SelectItem>
+                          <SelectItem value="redes-sociais">Redes sociais</SelectItem>
+                          <SelectItem value="indicacao">Indicação</SelectItem>
+                          <SelectItem value="outros">Outros</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </ContainerInput>
+                    {/* Mensagem de erro */}
                     {errors.howFoundUs && (
-                      <p className="text-xs text-red-500">{errors.howFoundUs}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.howFoundUs}</p>
                     )}
-                  </ContainerInput>
+                  </div>
 
-                  {/* E-mail - linha inteira */}
-                  <ContainerInput title="E-mail">
-                    <Input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setField("email", e.target.value)}
-                      placeholder="email@exemplo.com"
-                      required
-                    />
+                  {/* E-mail */}
+                  <div className="flex flex-col col-span-2">
+                    <ContainerInput required className={errors.email && "border-red-300"} title="E-mail">
+                      <Input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setField("email", e.target.value)}
+                        placeholder="email@exemplo.com"
+                        required
+                      />
+                    </ContainerInput>
+                    {/* Mensagem de erro */}
                     {errors.email && (
-                      <p className="text-xs text-red-500">{errors.email}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.email}</p>
                     )}
-                  </ContainerInput>
+                  </div>
 
-                  {/* Senha + Confirmação de senha */}
-                  <ContainerInput className="col-span-1" title="Senha">
-                    <Input
-                      type="password"
-                      value={formData.password}
-                      onChange={(e) => setField("password", e.target.value)}
-                      placeholder="Digite sua senha"
-                      required
-                    />
+                  {/* Senha */}
+                  <div className="flex flex-col">
+                    <ContainerInput required className={`col-span-1 ${errors.password && "border-red-300"}`} title="Senha">
+                      <Input
+                        type="password"
+                        value={formData.password}
+                        onChange={(e) => setField("password", e.target.value)}
+                        placeholder="Digite sua senha"
+                        required
+                      />
+                    </ContainerInput>
+                    {/* Mensagem de erro */}
                     {errors.password && (
-                      <p className="text-xs text-red-500">{errors.password}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.password}</p>
                     )}
-                  </ContainerInput>
+                  </div>
 
-                  <ContainerInput className="col-span-1" title="Confirmação de senha">
-                    <Input
-                      type="password"
-                      value={formData.confirmPassword}
-                      onChange={(e) => setField("confirmPassword", e.target.value)}
-                      placeholder="Confirme sua senha"
-                      required
-                    />
+                  {/* Confirmação de senha */}
+                  <div className="flex flex-col">
+                    <ContainerInput required className={`col-span-1 ${errors.confirmPassword && "border-red-300"}`} title="Confirmação de senha">
+                      <Input
+                        type="password"
+                        value={formData.confirmPassword}
+                        onChange={(e) => setField("confirmPassword", e.target.value)}
+                        placeholder="Confirme sua senha"
+                        required
+                      />
+                    </ContainerInput>
+                    {/* Mensagem de erro */}
                     {errors.confirmPassword && (
-                      <p className="text-xs text-red-500">{errors.confirmPassword}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.confirmPassword}</p>
                     )}
-                  </ContainerInput>
+                  </div>
 
-                  {/* Mensagem de validação de senha - span completo */}
+                  {/* Mensagem de validação de senha */}
                   <div className="col-span-2 -mt-3">
                     <p className="text-xs text-[#777]">
                       Mínimo de 8 caracteres com letras e números
@@ -311,8 +348,9 @@ export function RegisterForm() {
                   </div>
                 </div>
               </form>
+
+              {/* Botão Cadastrar */}
                <div className="flex items-center justify-between mt-4 mb-8">
-                {/* Botão Cadastrar */}
                 <Button
                   type="submit"
                   onClick={handleSubmit}
@@ -322,6 +360,7 @@ export function RegisterForm() {
                 </Button>
               </div>
 
+              {/* Separador - Linha de divisão */}
               <Separator className="bg-[#E1E7EF]" />
 
               {/* Link para login */}
@@ -332,18 +371,22 @@ export function RegisterForm() {
                 </Link>
               </div>
             </TabsContent>
+
+            {/* Formulário para Psicólogos */}
             <TabsContent value="psychologist"> 
+              {/* Barra de progresso */}
               <div className="flex flex-col my-6">
                 <span className="text-sm font-semibold text-[#696969] mb-2">Etapa {step} de 2</span>
                 <Progress className="h-1" value={progress} />
               </div>
 
+              {/* Etapa 1 do Formulário - Dados pessoais */}
               { step === 1 && (<form className="mt-4" onSubmit={handleSubmit}>
                 {/* Grid de campos conforme protótipo */}
                 <div className="grid grid-cols-2 gap-x-4 gap-y-5">
                   
                   {/* Nome completo - linha inteira */}
-                  <ContainerInput title="Nome completo">
+                  <ContainerInput required title="Nome completo">
                     <Input
                       value={formData.fullName}
                       onChange={(e) => setField("fullName", e.target.value)}
@@ -351,7 +394,7 @@ export function RegisterForm() {
                       required
                     />
                     {errors.fullName && (
-                      <p className="text-xs text-red-500">{errors.fullName}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.fullName}</p>
                     )}
                   </ContainerInput>
 
@@ -365,7 +408,7 @@ export function RegisterForm() {
                   </ContainerInput>
 
                   {/* Gênero */}
-                  <ContainerInput className="col-span-1" title="Gênero">
+                  <ContainerInput required className="col-span-1" title="Gênero">
                     <Select onValueChange={(value) => setField("gender", value)} required>
                       <SelectTrigger value={formData.gender}>
                         <SelectValue placeholder="Selecione" />
@@ -378,12 +421,12 @@ export function RegisterForm() {
                       </SelectContent>
                     </Select>
                     {errors.gender && (
-                      <p className="text-xs text-red-500">{errors.gender}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.gender}</p>
                     )}
                   </ContainerInput>
 
                   {/* Telefone - linha inteira */}
-                  <ContainerInput title="Telefone">
+                  <ContainerInput required title="Telefone">
                     <div className="flex">
                       <Select>
                         <SelectTrigger className="w-12 mr-2">
@@ -406,12 +449,12 @@ export function RegisterForm() {
                       />
                     </div>
                     {errors.phone && (
-                      <p className="text-xs text-red-500">{errors.phone}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.phone}</p>
                     )}
                   </ContainerInput>
 
                   {/* Data de nascimento */}
-                  <ContainerInput className="col-span-1" title="Data de nascimento">
+                  <ContainerInput required className="col-span-1" title="Data de nascimento">
                     <Input
                       type="date"
                       value={formData.birthDate}
@@ -419,12 +462,12 @@ export function RegisterForm() {
                       required
                     />
                     {errors.birthDate && (
-                      <p className="text-xs text-red-500">{errors.birthDate}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.birthDate}</p>
                     )}
                   </ContainerInput>
 
                   {/* CPF */}
-                  <ContainerInput className="col-span-1" title="CPF">
+                  <ContainerInput required className="col-span-1" title="CPF">
                     <Input
                       value={formData.cpf}
                       onChange={(e) => setField("cpf", e.target.value)}
@@ -432,12 +475,12 @@ export function RegisterForm() {
                       required
                     />
                     {errors.cpf && (
-                      <p className="text-xs text-red-500">{errors.cpf}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.cpf}</p>
                     )}
                   </ContainerInput>
 
                   {/* E-mail - linha inteira */}
-                  <ContainerInput title="E-mail Profissional">
+                  <ContainerInput required title="E-mail Profissional">
                     <Input
                       type="email"
                       value={formData.email}
@@ -446,12 +489,12 @@ export function RegisterForm() {
                       required
                     />
                     {errors.email && (
-                      <p className="text-xs text-red-500">{errors.email}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.email}</p>
                     )}
                   </ContainerInput>
 
                   {/* Senha + Confirmação de senha */}
-                  <ContainerInput className="col-span-1" title="Senha">
+                  <ContainerInput required className="col-span-1" title="Senha">
                     <Input
                       type="password"
                       value={formData.password}
@@ -460,11 +503,11 @@ export function RegisterForm() {
                       required
                     />
                     {errors.password && (
-                      <p className="text-xs text-red-500">{errors.password}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.password}</p>
                     )}
                   </ContainerInput>
 
-                  <ContainerInput className="col-span-1" title="Confirmação de senha">
+                  <ContainerInput required className="col-span-1" title="Confirmação de senha">
                     <Input
                       type="password"
                       value={formData.confirmPassword}
@@ -473,7 +516,7 @@ export function RegisterForm() {
                       required
                     />
                     {errors.confirmPassword && (
-                      <p className="text-xs text-red-500">{errors.confirmPassword}</p>
+                      <p className="text-xs text-red-500 mt-2 font-medium">{errors.confirmPassword}</p>
                     )}
                   </ContainerInput>
 
@@ -485,23 +528,24 @@ export function RegisterForm() {
                   </div>
                 </div>
               </form>)}
+              {/* Etapa 2 do Formulário - Dados profissionais */}
               { step === 2 && (<form className="mt-4" onSubmit={handleSubmit}>
                 {/* Grid de campos conforme protótipo */}
                 <div className="grid grid-cols-1 gap-x-4 gap-y-5">
-                  <ContainerInput title="CRP">
+                  <ContainerInput required title="CRP">
                     <Input
                       placeholder="99/99999"
                       required
                     />
                   </ContainerInput>
-                  <ContainerInput title="Breve descrição profissional">
+                  <ContainerInput required title="Breve descrição profissional">
                     <Input
                       type="text"
                       placeholder="Escreva uma breve descrição sobre você e sua abordagem terapêutica"
                       required
                     />
                   </ContainerInput>
-                  <ContainerInput title="Como você nos encontrou?">
+                  <ContainerInput required title="Como você nos encontrou?">
                     <Select value={formData.howFoundUs} onValueChange={(value) => setField("howFoundUs", value)} required>
                       <SelectTrigger>
                         <SelectValue placeholder="Selecione" />
@@ -516,7 +560,7 @@ export function RegisterForm() {
                   </ContainerInput>
 
                   <div className="flex flex-col col-span-2">
-                    <ContainerInput title="Formação e Especializações">
+                    <ContainerInput required title="Formação e Especializações">
                       <Input
                         placeholder="Descreva sua formação acadêmica e áreas de atuação"
                         required
@@ -525,7 +569,7 @@ export function RegisterForm() {
                     <p className="mt-3 text-xs text-[#777] font-medium">Inclua: graduação, pós-graduações, especializações, abordagens terapêuticas, etc.</p>
                   </div>
 
-                  <ContainerInput title="Qual a sua expectativa com a plataforma?">
+                  <ContainerInput required title="Qual a sua expectativa com a plataforma?">
                     <Input
                       placeholder="Descreva de forma breve"
                       required
@@ -535,21 +579,21 @@ export function RegisterForm() {
                 </div>
               </form>)}
 
-
+              {/* Botões de Voltar e Avançar/Cadastrar */}
               <div className="flex items-center justify-between my-8">
                 <Button type="button" onClick={handlePreviousStep} variant={step === 1 ? 'disabled' : 'outline'} className="w-32">
                   <ArrowLeft />Voltar
                 </Button>
-                {/* Botão Cadastrar - flat design */}
                 <Button type="button" onClick={step === 1 ? handleNextStep : handleSubmit} variant="default" className="w-32">
                   {step === 1 ? 'Avançar' : 'Cadastrar'} 
                   {step === 1 && <ArrowRight />}
                 </Button>
               </div>
 
+              {/* Separador - Linha de divisão */}
               <Separator className="bg-[#E1E7EF]" />
 
-              {/* Link para login */}
+              {/* Link para Login */}
               <div className="text-center mt-6 text-sm">
                 <span className="text-[#666]">Já tem uma conta? </span>
                 <Link href="/login" className="text-[#3D7CDB] font-semibold hover:underline hover:text-[#1C4B9C]">

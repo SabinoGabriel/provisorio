@@ -6,7 +6,7 @@ export default function LoginPage() {
     <main 
       className="min-h-screen flex items-center justify-center p-4"
       style={{
-        background: 'linear-gradient(0deg, #8E4BF2 0%, #009DEB 100%)'
+        background: 'linear-gradient(0deg, #8E4BF2 0%, #009DEB 85%, #2fbaff 100%)'
       }}>
       <LoginForm />
     </main>

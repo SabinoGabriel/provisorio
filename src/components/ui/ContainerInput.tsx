@@ -1,14 +1,13 @@
 import * as React from "react"
 import { cn } from "@/utils/lib/tailwind-merge"
 
-
 export interface ContainerInputProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string
   title?: string
-}
+  required?: boolean}
 
 const ContainerInput = React.forwardRef<HTMLDivElement, ContainerInputProps>(
-  ({ className, title, ...props }, ref) => {
+  ({ className, title, required, ...props }, ref) => {
     return (
         <div 
             ref={ref}
@@ -19,7 +18,7 @@ const ContainerInput = React.forwardRef<HTMLDivElement, ContainerInputProps>(
             {...props}
         >
             <label className="text-sm font-semibold text-[#333]">
-                {title} <span className="text-[#195FB5]">*</span>
+                {title} {required && <span className="text-[#195FB5]">*</span>}
             </label>
             {props.children}
         </div>

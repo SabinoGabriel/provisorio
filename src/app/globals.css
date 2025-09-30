@@ -22,5 +22,12 @@
 body {
   color: var(--foreground);
   background: var(--background);
+}
+
+* {
   font-family: "Montserrat", sans-serif;
+}
+
+h1 {
+  font-family: "Unbounded", sans-serif;
 }

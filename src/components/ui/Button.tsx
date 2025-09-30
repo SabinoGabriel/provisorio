@@ -14,6 +14,7 @@ const buttonVariants = cva(
           "border border-strokeinput bg-background hover:bg-accent hover:text-accent-foreground",
         link: "text-secondary underline-offset-4 hover:underline",
         disabled: "bg-gray-200 text-gray-500 cursor-not-allowed",
+        ghost: "hover:bg-accent hover:text-accent-foreground border-none",
       },
       size: {
         default: "h-10 px-4 py-2",

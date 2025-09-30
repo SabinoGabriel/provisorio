@@ -1,16 +1,14 @@
-// src/components/ui/Input.tsx
-
 import * as React from "react"
 import { cn } from "@/utils/lib/tailwind-merge"
 
-// Definimos a interface de props que nosso Input vai aceitar
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: "text" | "email" | "password" | "number" | "search" | "tel" | "date"
   className?: string
+  required?: boolean
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, required, ...props }, ref) => {
     return (
         <input
           type={type}
@@ -19,6 +17,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className
           )}
           ref={ref}
+          required={required}
           {...props}
         />
     )
