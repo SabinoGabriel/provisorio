@@ -168,6 +168,7 @@ export function RegisterForm() {
                         value={formData.socialName}
                         onChange={(e) => setField("socialName", e.target.value)}
                         placeholder="Digite seu nome social"
+                        required
                       />
                   </ContainerInput>
 
@@ -314,6 +315,7 @@ export function RegisterForm() {
                 {/* Botão Cadastrar */}
                 <Button
                   type="submit"
+                  onClick={handleSubmit}
                   className="w-full mt-8 bg-[#983DEB] hover:bg-[#7B26C8] text-white h-12 rounded-xl"
                 >
                   Cadastrar
@@ -539,7 +541,7 @@ export function RegisterForm() {
                   <ArrowLeft />Voltar
                 </Button>
                 {/* Botão Cadastrar - flat design */}
-                <Button type="button" onClick={handleNextStep} variant="default" className="w-32">
+                <Button type="button" onClick={step === 1 ? handleNextStep : handleSubmit} variant="default" className="w-32">
                   {step === 1 ? 'Avançar' : 'Cadastrar'} 
                   {step === 1 && <ArrowRight />}
                 </Button>
