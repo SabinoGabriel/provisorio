@@ -1,11 +1,11 @@
-import { RegisterForm } from "@/components/auth/registerforms";
+import { RegisterForm } from "@/components/auth/RegisterForm";
 
 export default function CadastroPage() {
   return (
     <main 
       className="min-h-screen flex items-center justify-center p-4"
       style={{
-        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
+        background: 'linear-gradient(0deg, #8E4BF2 0%, #009DEB 100%)'
       }}
     >
       <RegisterForm />
