@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
 import { ArrowRight } from "lucide-react";
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
       </Button>
       <Button variant={"link"}>link button</Button>
       <Card>Card Example</Card>
-      <Input></Input>
       <footer className="w-full absolute bottom-4 flex flex-col space-y-2 items-center">
         <hr className="w-64" />
         <p className="text-sm">
