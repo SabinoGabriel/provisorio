@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { Card } from "@/components/ui/Card";
@@ -40,6 +41,7 @@ const initialForm: FormData = {
 };
 
 export function RegisterForm() {
+  const router = useRouter();
   const [progress, setProgress] = useState(50); // Estado para o progresso do cadastro do psicólogo
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>(initialForm);
@@ -98,7 +100,8 @@ export function RegisterForm() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
-    alert("Cadastro paciente submetido!");
+    alert("Cadastro paciente submetido! Redirecionando para confirmação de e-mail.");
+    router.push("/email-confirm");
   }
 
   // função para passar para a próxima etapa do formulário
@@ -130,10 +133,10 @@ export function RegisterForm() {
       <Card
         className="bg-white border border-[#E5E5E5]"
         style={{
-          width: 800,
-          padding: 32,
+          width: "50rem",
+          padding: "2rem",
           boxSizing: "border-box",
-          borderRadius: 24,
+          borderRadius: "1.5rem",
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)"
         }}>
           
