@@ -1,8 +1,14 @@
+import { RegisterForm } from "@/components/auth/RegisterForm";
+
 export default function CadastroPage() {
-    return (
-        <main className="flex items-center justify-center min-h-screen">
-            <h1>Página de Cadastro</h1>
-            {/* O formulário de cadastro virá aqui no futuro */}
-        </main>
-    );
+  return (
+    <main 
+      className="min-h-screen flex items-center justify-center p-4"
+      style={{
+        background: 'linear-gradient(0deg, #8E4BF2 0%, #009DEB 85%, #2fbaff 100%)'
+      }}
+    >
+      <RegisterForm />
+    </main>
+  );
 }
