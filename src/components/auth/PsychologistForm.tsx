@@ -1,0 +1,87 @@
+"use client"
+import { useForm } from "react-hook-form";
+import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Form } from "@/components/ui/Form"
+import { Button } from "@/components/ui/Button";
+import { psychologistSchema } from "@/types/form";
+import { StepOne } from "./StepOne";
+import { StepTwo } from "./StepTwo";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Progress } from "@/components/ui/Progress";
+import { cn } from "@/utils/lib/tailwind-merge";
+
+type PsychologistFormData = z.infer<typeof psychologistSchema>
+
+export function PsychologistForm() {
+    const [step, setStep] = useState(1);
+
+    const psychologistForm = useForm<PsychologistFormData>({
+        resolver: zodResolver(psychologistSchema),
+        mode: "onTouched",
+        defaultValues: {
+            fullName: "",
+            socialName: "",
+            phone: "",
+            cpf: "",
+            birthDate: undefined,
+            gender: undefined,
+            email: "",
+            password: "",
+            confirmPassword: "",
+            howFoundUs: undefined,
+            crp: "",
+            professionalDescription: "",
+            academicBackground: "",
+            platformExpectation: "",
+        },
+    })
+
+    function onSubmit(data: PsychologistFormData) {
+        console.log("Psicólogo:", data)
+    }
+
+    return (
+        <Form {...psychologistForm}>
+            <form onSubmit={psychologistForm.handleSubmit(onSubmit)} className="space-y-8">
+                 {/* Barra de progresso */}
+                <div className="flex flex-col">
+                    <span className="text-sm font-semibold text-[#696969] mb-2">Etapa {step} de 2</span>
+                    <Progress className="h-1" value={step === 1 ? 50 : 100} />
+                </div>
+
+                {/* Renderização do formulário de acordo com a etapa */}
+                {step === 1 && <StepOne form={psychologistForm} />}
+                {step === 2 && <StepTwo form={psychologistForm} />}
+
+                {/* Botões de Voltar e Avançar/Cadastrar */}
+                <div className="flex items-center justify-between my-8">
+                    <Button type="button" onClick={() => setStep(1)} variant={step === 1 ? 'disabled' : 'outline'} className="w-32">
+                        <ArrowLeft /> Voltar
+                    </Button>
+                    <Button type="submit" onClick={(e) => {
+                        if (step === 1) {
+                            psychologistForm.trigger([
+                                "fullName", "phone", "birthDate", "gender", "email", "cpf", "password", "confirmPassword",
+                            ]).then((valid) => { 
+                                if (valid) setStep(2)
+                            })
+                        }
+                        else {
+                            e.preventDefault()
+                            psychologistForm.trigger([
+                                "crp", "professionalDescription", "academicBackground", "platformExpectation", "howFoundUs",
+                            ]).then((valid) => {
+                                if (valid) onSubmit(psychologistForm.getValues())
+                            })
+                        } 
+                    }} className={cn("w-32bg-[#983DEB] hover:bg-[#7B26C8] text-white h-12 rounded-xl", step === 2 && "w-40")}>
+                        {step === 1 ? 'Avançar' :  'Finalizar Cadastro'} 
+                        {step === 1 && <ArrowRight />}
+                    </Button>
+                </div>
+            </form>
+        </Form>
+    )
+}
