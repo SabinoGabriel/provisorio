@@ -16,6 +16,7 @@ export default {
         secondary: "var(--secondary)",
         input: "var(--bg-input)",
         strokeinput: "var(--stroke-input)",
+        destrutive: "var(--destrutive)",
       },
     },
   },

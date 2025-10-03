@@ -20,13 +20,14 @@ function isValidDate(date: Date | undefined) {
 }
 
 interface DatePickerInputProps {
-  value: string
-  onChange: (val: string) => void
+  value?: Date | undefined
+  onChange?: (val: string) => void
+  onBlur?: (val: string) => void
   placeholder?: string
   id?: string
 }
 
-export function DatePickerInput({ value, onChange, placeholder = "DD/MM/AAAA", id }: DatePickerInputProps) {
+export function DatePickerInput({ value, onChange, onBlur, placeholder = "DD/MM/AAAA", id }: DatePickerInputProps) {
   const [open, setOpen] = React.useState(false)
   const [date, setDate] = React.useState<Date | undefined>(
     value ? new Date(value) : undefined
@@ -47,11 +48,22 @@ export function DatePickerInput({ value, onChange, placeholder = "DD/MM/AAAA", i
     <div className="flex justify-between relative w-full">
       <Input
         id={id}
+        type="date"
         value={value}
         placeholder={placeholder}
+        required
         onChange={(e) => {
           const raw = e.target.value
           onChange(raw)
+          const parsed = new Date(raw)
+          if (isValidDate(parsed)) {
+            setDate(parsed)
+            setMonth(parsed)
+          }
+        }}
+        onBlur={(e) => {
+          const raw = e.target.value
+          onBlur(raw)
           const parsed = new Date(raw)
           if (isValidDate(parsed)) {
             setDate(parsed)
@@ -92,7 +104,7 @@ export function DatePickerInput({ value, onChange, placeholder = "DD/MM/AAAA", i
               if (!newDate) return
               setDate(newDate)
               setMonth(newDate)
-              onChange(formatDate(newDate)) // <- aqui salva no formData
+              onChange(formatDate(newDate))
               setOpen(false)
             }}
           />
