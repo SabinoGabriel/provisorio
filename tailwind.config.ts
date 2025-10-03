@@ -14,6 +14,15 @@ export default {
         primary: "var(--bg-primary)",
         primaryhover: "var(--bg-primary-hover)",
         secondary: "var(--secondary)",
+        input: "var(--bg-input)",
+        strokeinput: "var(--stroke-input)",
+      },
+      maxWidth: {
+        'email-form': '37.5rem',
+        'auth-form': '50rem', // 800px
+      },
+      minHeight: {
+        'email-form': '25rem',
       },
     },
   },
