@@ -5,8 +5,10 @@ import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { ContainerInput } from "@/components/ui/ContainerInput";
 import Image from "next/image"; // Importe o componente Image do Next.js
+import { useRouter } from "next/navigation";
 
 export function ForgotPasswordForm() {
+  const router = useRouter();
   return (
     <Card
       className="w-full max-w-email-form min-h-email-form flex flex-col bg-white border border-[#E5E5E5] rounded-3xl shadow-[0_2px_8px_rgba(0,0,0,0.08)] p-8"
@@ -30,7 +32,14 @@ export function ForgotPasswordForm() {
         </div>
 
         {/* Formulário: cada bloco separado por 1.5rem (gap-6) */}
-        <form className="w-full flex flex-col items-center gap-6">
+        <form
+          className="w-full flex flex-col items-center gap-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            // Futuro: chamada API para solicitar recuperação
+            router.push("/recuperar-senha/confirmacao");
+          }}
+        >
           <ContainerInput title="E-mail" className="w-full">
             <Input type="email" placeholder="Digite seu e-mail" />
           </ContainerInput>
