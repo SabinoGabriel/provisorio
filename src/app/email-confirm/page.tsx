@@ -1,5 +1,5 @@
 // src/app/(auth)/email-confirm/page.tsx
-import { EmailConfirmForm } from "@/components/auth/EmailConfirmForm";
+import { EmailConfirmForm } from "@/components/auth/VerificationCodeForms/EmailConfirmForm";
 
 export default function EmailConfirmPage() {
   return (

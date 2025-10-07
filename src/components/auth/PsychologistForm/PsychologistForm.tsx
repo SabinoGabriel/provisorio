@@ -19,7 +19,7 @@ export function PsychologistForm() {
 
     const psychologistForm = useForm<PsychologistFormData>({
         resolver: zodResolver(psychologistSchema),
-        mode: "onTouched",
+        mode: "all",
         defaultValues: {
             fullName: "",
             socialName: "",
@@ -38,13 +38,13 @@ export function PsychologistForm() {
         },
     })
 
-    function onSubmit(data: PsychologistFormData) {
-        console.log("Psicólogo:", data)
+    function onSubmit() {
+        console.log("Psicólogo:", psychologistForm.getValues())
     }
 
     return (
         <Form {...psychologistForm}>
-            <form onSubmit={psychologistForm.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={psychologistForm.handleSubmit(onSubmit)} className="space-y-5">
                  {/* Barra de progresso */}
                 <div className="flex flex-col">
                     <span className="text-sm font-semibold text-[#696969] mb-2">Etapa {step} de 2</span>
@@ -57,26 +57,29 @@ export function PsychologistForm() {
 
                 {/* Botões de Voltar e Avançar/Cadastrar */}
                 <div className="flex items-center justify-between my-8">
-                    <Button type="button" onClick={() => setStep(1)} variant={step === 1 ? 'disabled' : 'outline'} className="w-32">
+                    <Button type="button" onClick={() => setStep(1)} variant={step === 1 ? 'disabled' : 'outline'} className="w-28">
                         <ArrowLeft /> Voltar
                     </Button>
                     <Button type="submit" onClick={(e) => {
+                        e.preventDefault()
                         if (step === 1) {
-                            psychologistForm.trigger([
-                                "fullName", "phone", "birthDate", "gender", "email", "cpf", "password", "confirmPassword",
-                            ]).then((valid) => { 
-                                if (valid) setStep(2)
-                            })
+                            psychologistForm
+                                .trigger([ 
+                                    "fullName", "phone", "birthDate", "gender", "email", "cpf", "password", "confirmPassword"
+                                ])
+                                .then((valid) => { 
+                                    if (valid) setStep(2)
+                                })
                         }
-                        else {
-                            e.preventDefault()
-                            psychologistForm.trigger([
-                                "crp", "professionalDescription", "academicBackground", "platformExpectation", "howFoundUs",
-                            ]).then((valid) => {
-                                if (valid) onSubmit(psychologistForm.getValues())
+                        if (step === 2 && psychologistForm.formState.isValid) {
+                            psychologistForm
+                                .trigger([
+                                    "crp", "professionalDescription", "academicBackground", "platformExpectation", "howFoundUs",
+                                ]).then((valid) => {
+                                    if (valid)  onSubmit()
                             })
                         } 
-                    }} className={cn("w-32bg-[#983DEB] hover:bg-[#7B26C8] text-white h-12 rounded-xl", step === 2 && "w-40")}>
+                    }} className={cn("w-32", step === 2 && "w-40")}>
                         {step === 1 ? 'Avançar' :  'Finalizar Cadastro'} 
                         {step === 1 && <ArrowRight />}
                     </Button>

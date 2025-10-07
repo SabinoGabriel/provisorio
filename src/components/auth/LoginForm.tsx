@@ -1,20 +1,21 @@
 "use client"
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
-import Link from "next/link";
-import { Separator } from "@/components/ui/Separator";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage} from "@/components/ui/Form";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/types/form";
-import { LoginFormData } from "@/types/form";
+import { Button } from "@/components/ui/Button"
+import { Card } from "@/components/ui/Card"
+import { Input } from "@/components/ui/Input"
+import { Separator } from "@/components/ui/Separator"
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage} from "@/components/ui/Form"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { loginSchema } from "@/types/form"
+import { LoginFormData } from "@/types/form"
+import { PasswordField } from "@/components/ui/PasswordField"
+import Link from "next/link"
 
 export function LoginForm() {
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-    mode: "onTouched",
+    mode: "all",
     defaultValues: {
       email: "",
       password: "",
@@ -28,29 +29,19 @@ export function LoginForm() {
   return (
     <div className="flex flex-col justify-center py-16">
 
-      {/* Título e Descrição */}
-       <div className="text-center flex flex-col mb-16 gap-2">
-        <h1 className="text-4xl text-white font-semibold tracking-tight">Acesse sua conta</h1>
-        <p className="text-2xl text-[#EEF5FF] font-normal text-muted-foreground">Comece sua jornada de cuidado</p>
-      </div>
-
       {/* Container do Formulário */}
-      <Card 
-        className="bg-white border border-[#E5E5E5] w-[36rem] p-8 box-border flex flex-col rounded-3xl"
-        style={{
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)"
-      }}>
+      <Card className="w-[36rem]">
 
-        {/* Título */}
-        <h2 className="text-center text-2xl font-bold text-[#195FB5] mb-8">
-          Login
-        </h2>
+        {/* Título e Descrição */}
+        <div className="text-center flex flex-col mb-10 gap-1">
+          <h1 className="text-2xl text-[#195FB5] font-semibold">Acesse sua conta</h1>
+          <p className="text-lg text-[#9098a3] font-medium text-muted-foreground">É um prazer ter você de novo com a gente!</p>
+        </div>
 
         {/* Formulário */}
         <Form {...form}>
           <form className="w-full space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col w-full gap-4">
-
               {/* E-mail */}
               <FormField 
                 control={form.control}
@@ -77,7 +68,7 @@ export function LoginForm() {
                       <FormControl>
                         <div>
                             <FormLabel>Senha</FormLabel>
-                            <Input {...field} type="password" placeholder="Informe sua senha" />
+                            <PasswordField {...field} className="w-full" placeholder="Informe sua senha" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -87,7 +78,7 @@ export function LoginForm() {
             </div>
             
             {/* Link para Recuperação de Senha */}
-            <Link href="#" className="text-[#3D7CDB] w-fit text-sm flex font-semibold hover:underline hover:text-[#1C4B9C]">
+            <Link href="/recuperar-senha" className="text-[#3D7CDB] w-fit text-sm flex font-semibold hover:underline hover:text-[#1C4B9C]">
                 Esqueci a senha
             </Link>
 
@@ -107,7 +98,7 @@ export function LoginForm() {
         </Form>
 
         {/* Separador - Linha de divisão */}
-        <Separator className="bg-[#E1E7EF] my-6" />
+        <Separator className="bg-[#E1E7EF] my-4" />
 
         {/* Link para Cadastro */}
         <div className="text-center text-sm">
@@ -118,5 +109,5 @@ export function LoginForm() {
         </div>
       </Card>
     </div>
-  );
+  )
 }

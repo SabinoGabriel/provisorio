@@ -6,7 +6,7 @@
   --background: #ffffff;
   --foreground: #171717;
   --bg-primary: #8e4bf2;
-  --bg-primary-hover: #7a3ee0;
+  --bg-primary-hover: #8e4bf2e3;
   --secondary: #3d7cdb;
   --bg-input: #FBFCFD;
   --stroke-input: #E1E7EF;
@@ -16,7 +16,7 @@
 @media (prefers-color-scheme: white) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #ff0000;
   }
 }
 
@@ -34,11 +34,19 @@ h1 {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  margin-right: -20.2rem;
+  display: none;
 }
 
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px var(--bg-input) inset !important; /* substitui a cor */
   box-shadow: 0 0 0px 1000px var(--bg-input) inset !important;
-  -webkit-text-fill-color: #000 !important; /* cor do texto */
+  -webkit-text-fill-color: #606064 !important; /* cor do texto */
+}
+
+[data-sonner-toast] [data-description] {
+  color: #606064 !important; 
+}
+
+[data-sonner-toaster][data-sonner-theme=dark] [data-description] {
+  color: #606064 !important; 
 }
