@@ -51,11 +51,10 @@ export function ForgotPasswordForm() {
       <Form {...emailInput}>
         <form
           className="w-full flex flex-col items-center gap-6"
-          onSubmit={(e) => {
-            e.preventDefault()
+          onSubmit={emailInput.handleSubmit(() => {
             // Futuro: chamada API para solicitar recuperação
             router.push("/recuperar-senha/confirmacao")
-          }}
+          })}
         >
 
           {/* Entrada - E-mail */}

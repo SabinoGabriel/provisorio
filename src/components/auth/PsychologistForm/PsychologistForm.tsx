@@ -1,6 +1,8 @@
 "use client"
 import { useForm } from "react-hook-form";
 import { useState } from "react"
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Form } from "@/components/ui/Form"
@@ -38,8 +40,25 @@ export function PsychologistForm() {
         },
     })
 
-    function onSubmit() {
-        console.log("Psicólogo:", psychologistForm.getValues())
+    const router = useRouter();
+
+    // simula submissão para a API; substitua pela chamada real
+    const fakeSubmit = () => new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 800));
+
+    async function onSubmit() {
+        const values = psychologistForm.getValues();
+        console.log("Psicólogo:", values)
+        try {
+            const ok = await fakeSubmit();
+            if (ok) {
+                toast("Cadastro realizado com sucesso!", { description: "Verifique seu e-mail para confirmação." });
+                setTimeout(() => router.push('/email-confirm'), 1200);
+            } else {
+                toast("Não foi possível concluir o cadastro. Tente novamente.");
+            }
+        } catch (e) {
+            toast("Erro ao cadastrar. Verifique sua conexão.");
+        }
     }
 
     return (

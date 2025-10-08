@@ -34,10 +34,24 @@ export function EmailConfirmForm() {
     },
   })
 
-  const handleResendCode = () => {
-    toast("Um novo código de validação foi enviado para o seu e-mail.", {
-      description: "Redirecionando para o login..."
-    })
+  // simula uma chamada à API para reenviar o código
+  const fakeResend = () =>
+    // substitua por fetch/axios para a sua rota real
+    new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 800));
+
+  const handleResendCode = async () => {
+    try {
+      const success = await fakeResend();
+      if (success) {
+        toast("Um novo código de validação foi enviado para o seu e-mail.", {
+          description: "Verifique sua caixa de entrada (ou spam).",
+        });
+      } else {
+        toast("Não foi possível enviar o código. Tente novamente.");
+      }
+    } catch (error) {
+      toast("Erro ao reenviar o código. Verifique sua conexão.");
+    }
   };
 
   const onSubmitCode = () => {
