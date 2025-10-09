@@ -4,12 +4,12 @@ import { Card } from "@/components/ui/Card"
 import { Separator } from "@/components/ui/Separator"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs"
 import { PatientForm } from "@/components/auth/PatientForm/PatientForm"
-import { PsychologistForm } from "@/components/auth/PsychologistForm/PsychologistForm";
+import { PsychologistForm } from "@/components/auth/PsychologistForm/PsychologistForm"
 
 export function RegisterForm() {
 
   return (
-    <div className="flex flex-col justify-center py-16">
+    <div className="max-h-screen flex flex-col justify-center py-16">
       {/* Container do Formulário */}
       <Card>
         {/* Título e Descrição */}
@@ -34,7 +34,7 @@ export function RegisterForm() {
             </TabsContent>
 
             {/* Conteúdo da Tab Psicólogo */}
-            <TabsContent value="psychologist"> 
+            <TabsContent value="psychologist">
               <PsychologistForm />
             </TabsContent>
           </Tabs>
@@ -52,5 +52,5 @@ export function RegisterForm() {
         </div>
       </Card>
     </div>
-  );
+  )
 }
