@@ -38,7 +38,7 @@ export function PatientForm() {
         console.log("Paciente:", patientForm.getValues())
         patientForm.trigger().then((isValid) => {
             if (isValid) { 
-                showToast("error", "Cadastro realizado com sucesso!", {
+                showToast("success", "Cadastro realizado com sucesso!", {
                     description: "Redirecionando para a validação de código",
                 })
                 setTimeout(() => router.push('/email-confirm'), 2000)
