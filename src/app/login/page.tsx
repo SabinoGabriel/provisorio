@@ -1,14 +1,10 @@
-import { LoginForm } from "@/components/auth/LoginForm";
+import { LoginForm } from "@/components/auth/LoginForm"
 
 export default function LoginPage() {
   return (
-    // Centraliza o formulário na tela (mesma estrutura da branch funcional)
-    <main 
-      className="min-h-screen flex items-center justify-center p-4"
-      style={{
-        background: 'linear-gradient(0deg, #8E4BF2 0%, #009DEB 85%, #2fbaff 100%)'
-      }}>
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-t from-primary via-bluemiddle via-85% to-bluesoft p-4">
+      {/* Formulário de Login */}
       <LoginForm />
     </main>
-  );
+  )
 }

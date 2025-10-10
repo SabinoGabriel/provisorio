@@ -1,15 +1,18 @@
 "use client"
+
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/Form"
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/Select"
 import { Input } from "@/components/ui/Input"
 import { useForm } from "react-hook-form"
-import { PsychologistFormData } from "@/types/form"
 import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from "@/components/ui/InputGroup"
 import { maskCRP } from "@/utils/masks/masks"
+import { PsychologistFormData } from "@/types/form"
 
 export function StepTwo({ form }: { form: ReturnType<typeof useForm<PsychologistFormData>> }) {
   return (
     <div className="grid gap-x-4 gap-y-5">
+
+        {/* Entrada - CRP */}
         <FormField 
             control={form.control}
             name="crp"
@@ -26,6 +29,7 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
         )}
         />
 
+        {/* Entrada - Experiência Profissional */}
         <FormField 
             control={form.control}
             name="professionalDescription"
@@ -42,7 +46,7 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
                                     maxLength={1000}
                                 />
                                 <InputGroupAddon className="p-0 pr-1 mt-2 mb-1" align="block-end">
-                                    <InputGroupText className="text-xs text-[#a7a7a7] font-semibold">{field.value.length}/1000</InputGroupText>
+                                    <InputGroupText className="text-xs text-gray-500 font-semibold">{field.value.length}/1000</InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
                         </div>
@@ -52,7 +56,7 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
             )}
         />
 
-
+        {/* Entrada - Formação e Especializações */}
         <FormField 
             control={form.control}
             name="academicBackground"
@@ -69,7 +73,7 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
                                     maxLength={1000}
                                 />
                                 <InputGroupAddon className="p-0 pr-1 mt-2 mb-1" align="block-end">
-                                    <InputGroupText className="text-xs text-[#a7a7a7] font-semibold">{field.value.length}/1000</InputGroupText>
+                                    <InputGroupText className="text-xs text-gray-500 font-semibold">{field.value.length}/1000</InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
                         </div>
@@ -79,7 +83,7 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
             )}
         />
 
-
+        {/* Entrada - Expectativas sobre a Plataforma */}
         <FormField 
             control={form.control}
             name="platformExpectation"
@@ -96,7 +100,7 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
                                     maxLength={500}
                                 />
                                 <InputGroupAddon className="p-0 pr-1 mt-2 mb-1" align="block-end">
-                                    <InputGroupText className="text-xs text-[#a7a7a7] font-semibold">{field.value.length}/500</InputGroupText>
+                                    <InputGroupText className="text-xs text-gray-500 font-semibold">{field.value.length}/500</InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
                         </div>
@@ -106,6 +110,7 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
             )}
         />
         
+        {/* Entrada - Como nos encontrou? */}
         <FormField 
             control={form.control}
             name="howFoundUs"
@@ -131,6 +136,7 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
                 </FormItem>
             )}
         />
+        
     </div>
   )
 }

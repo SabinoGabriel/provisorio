@@ -1,31 +1,23 @@
 // src/components/auth/RecoveryCodeForm.tsx
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/InputOTP";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/Form";
-import { toast } from "sonner";
+import { Button } from "@/components/ui/Button"
+import { Card } from "@/components/ui/Card"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/InputOTP"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/Form"
+import { showToast } from "@/components/ui/Toast"
+import { verificationCodeSchema, RecoveryCodeFormData } from "@/types/form"
 
 export function RecoveryCodeForm() {
-  const router = useRouter();
-  const codeSchema = z.object({
-    code: z
-      .string()
-      .nonempty("Código de verificação é obrigatório")
-      .regex(/^\d+$/, "Código de verificação deve conter apenas números")
-      .refine((value) => /^\d{6}$/.test(value), {
-        message: "Código de verificação deve conter 6 dígitos",
-      }),
-  });
-  type RecoveryCodeFormType = z.infer<typeof codeSchema>
-  const codeInput = useForm<RecoveryCodeFormType>({
-    resolver: zodResolver(codeSchema),
+  const router = useRouter()
+
+  // Validação via Zod e react-hook-form
+  const codeInput = useForm<RecoveryCodeFormData>({
+    resolver: zodResolver(verificationCodeSchema),
     mode: "all",
     defaultValues: {
       code: "",
@@ -35,13 +27,13 @@ export function RecoveryCodeForm() {
   const onSubmitCode = () => { 
     codeInput.trigger().then((isValid) => {
       if (isValid) { 
-        toast("Código de verificação validado com sucesso!", {
+        showToast("success", "Código de verificação validado com sucesso!", {
           description: "Redirecionando para a redefinição de senha",
         })
         setTimeout(() => router.push('/recuperar-senha/nova-senha'), 2000)
       }
     })
-  };
+  }
   return (
     <Card className="w-full max-w-[42rem] min-h-[28rem] justify-between">
       <Image
@@ -54,10 +46,10 @@ export function RecoveryCodeForm() {
 
       {/* Título e Descrição */}
       <div className="flex flex-col items-center justify-center gap-2">
-        <h2 className="text-2xl font-bold text-[#195FB5]">
+        <h2 className="text-2xl font-bold text-bluestrong">
           Recuperação de Senha
         </h2>
-        <p className="text-base font-medium text-[#686D95] text-center">
+        <p className="text-base font-medium text-gray-650 text-center">
           Insira o código de verificação enviado para o seu e-mail
         </p>
       </div>
@@ -89,12 +81,12 @@ export function RecoveryCodeForm() {
             <Button type="submit" className="w-[13rem] h-[3rem]">
               Confirmar código
             </Button>
-            <div className="w-full flex gap-1 justify-center text-sm text-[#686D95] font-medium">
+            <div className="w-full flex gap-1 justify-center text-sm text-gray-650 font-medium">
               Não chegou?
               <Button
                 type="button"
                 variant="link"
-                className="p-0 h-auto text-[#3D7CDB] font-semibold"
+                className="p-0 h-auto text-blue font-semibold"
                 onClick={() => router.push("/recuperar-senha/confirmacao")}
               >
                 Enviar novamente
@@ -104,5 +96,5 @@ export function RecoveryCodeForm() {
         </form>
       </Form>
     </Card>
-  );
+  )
 }

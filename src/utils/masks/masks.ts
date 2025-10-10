@@ -13,12 +13,12 @@ export function maskCPF(value: string): string {
     .replace(/(\d{3})(\d)/, "$1.$2") // Coloca um ponto entre o terceiro e o quarto dígitos
     .replace(/(\d{3})(\d)/, "$1.$2") // Coloca um ponto entre o sexto e o sétimo dígitos
     .replace(/(\d{3})(\d{1,2})$/, "$1-$2") // Coloca um hífen entre o nono e o décimo dígitos
-    .slice(0, 14); // Limita o tamanho máximo para 14 caracteres (incluindo pontos e hífen)
+    .slice(0, 14) // Limita o tamanho máximo para 14 caracteres (incluindo pontos e hífen)
 }
 
 export function maskCRP(value: string): string {
   return value
     .replace(/\D/g, "")
     .replace(/(\d{2})(\d)/, "$1/$2")
-    .slice(0, 9);
+    .slice(0, 9)
 }

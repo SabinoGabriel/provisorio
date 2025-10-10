@@ -6,13 +6,13 @@ import { Separator } from "@/components/ui/Separator"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage} from "@/components/ui/Form"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { loginSchema } from "@/types/form"
-import { LoginFormData } from "@/types/form"
 import { PasswordField } from "@/components/ui/PasswordField"
+import { loginSchema, LoginFormData } from "@/types/form"
 import Link from "next/link"
 
 export function LoginForm() {
 
+  // Validação via Zod e react-hook-form
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     mode: "all",
@@ -32,10 +32,10 @@ export function LoginForm() {
       {/* Container do Formulário */}
       <Card className="w-[36rem]">
 
-        {/* Título e Descrição */}
+        {/* Título e Subtítulo */}
         <div className="text-center flex flex-col mb-10 gap-1">
-          <h1 className="text-2xl text-[#195FB5] font-semibold">Acesse sua conta</h1>
-          <p className="text-lg text-[#9098a3] font-medium text-muted-foreground">É um prazer ter você de novo com a gente!</p>
+          <h1 className="text-2xl text-bluestrong font-semibold">Acesse sua conta</h1>
+          <p className="text-lg text-gray-650 font-medium text-muted-foreground">É um prazer ter você de novo com a gente!</p>
         </div>
 
         {/* Formulário */}
@@ -51,7 +51,7 @@ export function LoginForm() {
                       <FormControl>
                         <div className="w-full">
                             <FormLabel>E-mail</FormLabel>
-                            <Input {...field} className="w-full" type="email" placeholder="Informe seu e-mail" />
+                            <Input {...field} className="w-full"  placeholder="Informe seu e-mail" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -78,36 +78,32 @@ export function LoginForm() {
             </div>
             
             {/* Link para Recuperação de Senha */}
-            <Link href="/recuperar-senha" className="text-[#3D7CDB] w-fit text-sm flex font-semibold hover:underline hover:text-[#1C4B9C]">
+            <Link href="/recuperar-senha" className="text-blue w-fit text-sm flex font-semibold hover:underline hover:text-bluehover">
                 Esqueci a senha
             </Link>
 
             {/* Botão Entrar */}
-            <Button
-              type="submit"
-              onClick={() => {
-                form.trigger().then((valid) => { 
-                  if (valid) onSubmit(form.getValues())
-                })
-              }}
-              className="w-full bg-[#983DEB] hover:bg-[#7B26C8] text-white h-12 rounded-xl"
-            >
+            <Button type="submit" variant="default" className="w-full h-12">
               Entrar
             </Button>
+
           </form>
+          
         </Form>
 
         {/* Separador - Linha de divisão */}
-        <Separator className="bg-[#E1E7EF] my-4" />
+        <Separator className="my-4" />
 
         {/* Link para Cadastro */}
         <div className="text-center text-sm">
-          <span className="text-[#666]">Não tem uma conta? </span>
-          <Link href="/cadastro" className="text-[#3D7CDB] font-semibold hover:underline hover:text-[#1C4B9C]">
+          <span className="text-gray-800">Não tem uma conta? </span>
+          <Link href="/cadastro" className="text-blue font-semibold hover:underline hover:text-bluehover">
             Criar Conta
           </Link>
         </div>
+
       </Card>
+
     </div>
   )
 }

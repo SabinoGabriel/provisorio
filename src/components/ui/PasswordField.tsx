@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { Button } from "./Button";
-import { InputGroup, InputGroupAddon } from "./InputGroup";
-import { Input } from "./Input";
+import { useState } from "react"
+import { Eye, EyeOff } from "lucide-react"
+import { Button } from "./Button"
+import { InputGroup, InputGroupAddon } from "./InputGroup"
+import { Input } from "./Input"
 
 function PasswordField(props: React.ComponentProps<typeof Input>) {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
 
   return (
       <InputGroup className="h-fit">
@@ -14,7 +14,7 @@ function PasswordField(props: React.ComponentProps<typeof Input>) {
           <Button
             type="button"
             variant="ghost"
-            className="hover:bg-[#f2f2f5] w-7 h-7"
+            className="hover:bg-gray-150 w-7 h-7"
             onClick={() => setShow((prev) => !prev)}
           >
             { show ? (
@@ -25,7 +25,7 @@ function PasswordField(props: React.ComponentProps<typeof Input>) {
           </Button>
         </InputGroupAddon>
       </InputGroup>
-  );
+  )
 }
 
 export { PasswordField }

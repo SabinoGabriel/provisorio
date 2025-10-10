@@ -1,4 +1,4 @@
-import { cn } from "@/utils/lib/tailwind-merge";
+import { cn } from "@/utils/lib/tailwind-merge"
 
 export const Card: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className,
@@ -7,10 +7,10 @@ export const Card: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center bg-white border border-[#E5E5E5] w-[52rem] p-8 box-border rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.08)]",
+        "flex flex-col items-center justify-center bg-white border border-gray-200 w-[52rem] p-8 box-border rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.08)]",
         className
       )}
       {...props}
     />
-  );
-};
+  )
+}

@@ -1,31 +1,36 @@
+"use client"
+
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/Form"
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/Select";
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/Select"
 import { Input } from "@/components/ui/Input"
-import { useForm } from "react-hook-form";
-import { PsychologistFormData } from "@/types/form";
-import { maskPhone, maskCPF } from "@/utils/masks/masks";
-import { PasswordField } from "@/components/ui/PasswordField";
-import { InputGroup, InputGroupAddon, InputGroupText } from "@/components/ui/InputGroup";
+import { useForm } from "react-hook-form"
+import { maskPhone, maskCPF } from "@/utils/masks/masks"
+import { PasswordField } from "@/components/ui/PasswordField"
+import { InputGroup, InputGroupAddon, InputGroupText } from "@/components/ui/InputGroup"
+import { PsychologistFormData } from "@/types/form"
 
 export function StepOne({ form }: { form: ReturnType<typeof useForm<PsychologistFormData>> }) {
   return (
     <div className="grid grid-cols-2 gap-x-4 gap-y-5">
-      <FormField 
-        control={form.control}
-        name="fullName"
-        render={({ field }) => (
-            <FormItem className="col-span-2 self-start">
-                <FormControl>
-                    <div>
-                        <FormLabel htmlFor="fullName">Nome Completo <span className="text-red-500">*</span></FormLabel>
-                        <Input {...field} id="fullName" type="text" placeholder="Informe seu nome completo" />
-                    </div>
-                </FormControl>
-                <FormMessage />
-            </FormItem>
-        )}
+        
+        {/* Entrada - Nome Completo */}
+        <FormField 
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+                <FormItem className="col-span-2 self-start">
+                    <FormControl>
+                        <div>
+                            <FormLabel htmlFor="fullName">Nome Completo <span className="text-red-500">*</span></FormLabel>
+                            <Input {...field} id="fullName" type="text" placeholder="Informe seu nome completo" />
+                        </div>
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+            )}
         />
 
+        {/* Entrada - Nome Social */}
         <FormField 
             control={form.control}
             name="socialName"
@@ -42,6 +47,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
             )}
         />
 
+        {/* Entrada - Gênero */}
         <FormField 
             control={form.control}
             name="gender"
@@ -71,6 +77,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
             )}
         />
 
+        {/* Entrada - Telefone */}
         <FormField 
             control={form.control}
             name="phone"
@@ -81,7 +88,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
                         <FormLabel htmlFor="phone">Telefone <span className="text-red-500">*</span></FormLabel>
                         <InputGroup className="gap-2">
                             <InputGroupAddon align="inline-start">
-                                <InputGroupText className="text-[#83828a] font-semibold">+55</InputGroupText>
+                                <InputGroupText className="text-gray-700 font-semibold">+55</InputGroupText>
                             </InputGroupAddon>
                             <Input {...field} id="phone" type="tel" autoComplete="tel" placeholder="(99) 99999-9999" onChange={(e) => field.onChange(maskPhone(e.target.value))} maxLength={15} />
                         </InputGroup>
@@ -92,6 +99,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
             )}
         />
 
+        {/* Entrada - Data de Nascimento */}
         <FormField 
             control={form.control}
             name="birthDate"
@@ -114,6 +122,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
             )}
         />
 
+        {/* Entrada - CPF */}
         <FormField 
             control={form.control}
             name="cpf"
@@ -130,6 +139,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
             )}
         />
         
+        {/* Entrada - E-mail */}
         <FormField 
             control={form.control}
             name="email"
@@ -146,6 +156,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
             )}
         />
 
+        {/* Entrada - Senha */}
         <FormField 
             control={form.control}
             name="password"
@@ -162,6 +173,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
             )}
         />
 
+        {/* Entrada - Confirmar Senha */}
         <FormField 
             control={form.control}
             name="confirmPassword"
@@ -177,6 +189,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
                 </FormItem>
             )}
         />
+        
     </div>
   )
 }

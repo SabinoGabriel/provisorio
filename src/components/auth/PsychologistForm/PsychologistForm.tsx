@@ -1,24 +1,24 @@
 "use client"
-import { useForm } from "react-hook-form";
-import { useState } from "react"
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Form } from "@/components/ui/Form"
-import { Button } from "@/components/ui/Button";
-import { psychologistSchema } from "@/types/form";
-import { StepOne } from "./StepOne";
-import { StepTwo } from "./StepTwo";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Progress } from "@/components/ui/Progress";
-import { cn } from "@/utils/lib/tailwind-merge";
 
-type PsychologistFormData = z.infer<typeof psychologistSchema>
+import { useForm } from "react-hook-form"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { showToast } from "@/components/ui/Toast"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Form } from "@/components/ui/Form"
+import { Button } from "@/components/ui/Button"
+import { StepOne } from "./StepOne"
+import { StepTwo } from "./StepTwo"
+import { ArrowLeft, ArrowRight } from "lucide-react"
+import { Progress } from "@/components/ui/Progress"
+import { cn } from "@/utils/lib/tailwind-merge"
+import { psychologistSchema, PsychologistFormData } from "@/types/form"
 
 export function PsychologistForm() {
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(1)
+    const router = useRouter()
 
+    // Validação via Zod e react-hook-form
     const psychologistForm = useForm<PsychologistFormData>({
         resolver: zodResolver(psychologistSchema),
         mode: "all",
@@ -40,33 +40,36 @@ export function PsychologistForm() {
         },
     })
 
-    const router = useRouter();
-
-    // simula submissão para a API; substitua pela chamada real
-    const fakeSubmit = () => new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 800));
+    // Simula submissão para a API substitua pela chamada real
+    const fakeSubmit = () => new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 800))
 
     async function onSubmit() {
-        const values = psychologistForm.getValues();
+        const values = psychologistForm.getValues()
         console.log("Psicólogo:", values)
         try {
-            const ok = await fakeSubmit();
+            const ok = await fakeSubmit()
             if (ok) {
-                toast("Cadastro realizado com sucesso!", { description: "Verifique seu e-mail para confirmação." });
-                setTimeout(() => router.push('/email-confirm'), 1200);
+                showToast("success", "Cadastro realizado com sucesso!", { 
+                    description: "Verifique seu e-mail para confirmação." 
+                })
+                setTimeout(() => router.push('/email-confirm'), 1200)
             } else {
-                toast("Não foi possível concluir o cadastro. Tente novamente.");
+                showToast("error", "Não foi possível concluir o cadastro. Tente novamente.")
             }
-        } catch (e) {
-            toast("Erro ao cadastrar. Verifique sua conexão.");
+        } catch (error) {
+            console.error(error)
+            showToast("error", "Erro ao cadastrar. Verifique sua conexão.")
         }
     }
 
     return (
         <Form {...psychologistForm}>
+            {/* Formulário */}
             <form onSubmit={psychologistForm.handleSubmit(onSubmit)} className="space-y-5">
-                 {/* Barra de progresso */}
+                
+                {/* Barra de progresso */}
                 <div className="flex flex-col">
-                    <span className="text-sm font-semibold text-[#696969] mb-2">Etapa {step} de 2</span>
+                    <span className="text-sm font-semibold text-gray-750 mb-2">Etapa {step} de 2</span>
                     <Progress className="h-1" value={step === 1 ? 50 : 100} />
                 </div>
 
@@ -103,7 +106,9 @@ export function PsychologistForm() {
                         {step === 1 && <ArrowRight />}
                     </Button>
                 </div>
+
             </form>
+
         </Form>
     )
 }

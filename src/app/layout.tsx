@@ -1,19 +1,19 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { Montserrat, Unbounded } from "next/font/google";
-import { Toaster } from "@/components/ui/Sonner";
+import type { Metadata } from "next"
+import "./globals.css"
+import { Montserrat, Unbounded } from "next/font/google"
+import { Toaster } from "@/components/ui/Sonner"
 
 const unbounded = Unbounded({
   variable: "--font-unbounded",
   subsets: ["latin"],
   display: "swap",
-});
+})
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
   display: "swap",
-});
+})
 
 export const metadata: Metadata = {
   title: "Psicólogos no Nordeste",
@@ -24,12 +24,12 @@ export const metadata: Metadata = {
   creator: "Seed a Bit",
   publisher: "Seed a Bit",
   abstract: "Descrição do App",
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
     return (
         <html lang='pt-BR'>

@@ -10,12 +10,14 @@ export function RegisterForm() {
 
   return (
     <div className="max-h-screen flex flex-col justify-center py-16">
+      
       {/* Container do Formulário */}
       <Card>
-        {/* Título e Descrição */}
+        
+        {/* Título e Subtítulo */}
         <div className="text-center flex flex-col mb-5 gap-1">
-          <h1 className="text-2xl text-[#195FB5] font-semibold tracking-tight">Crie sua conta</h1>
-          <p className="text-lg text-[#686D95] font-medium">Comece sua jornada de cuidado conosco</p>
+          <h1 className="text-2xl text-bluestrong font-semibold tracking-tight">Crie sua conta</h1>
+          <p className="text-lg text-gray-650 font-medium">Comece sua jornada de cuidado conosco</p>
         </div>
 
         {/* Toggle Paciente/Psicólogo - Barra única com botões internos */}
@@ -23,9 +25,9 @@ export function RegisterForm() {
           <Tabs defaultValue="pacient" className="w-full">
 
             {/* Barra de Tabs */}
-            <TabsList className="bg-[#F1F5F9] w-full p-1 h-12 mb-2 rounded-2xl">
-              <TabsTrigger className="w-full h-10 text-[#9098a3]" value="pacient">Paciente</TabsTrigger>
-              <TabsTrigger className="w-full h-10 text-[#9098a3]" value="psychologist">Psicólogo</TabsTrigger>
+            <TabsList className="bg-gray-100 w-full p-1 h-12 mb-2 rounded-2xl">
+              <TabsTrigger className="w-full h-10 text-gray-650" value="pacient">Paciente</TabsTrigger>
+              <TabsTrigger className="w-full h-10 text-gray-650" value="psychologist">Psicólogo</TabsTrigger>
             </TabsList>
 
             {/* Conteúdo da Tab Paciente */}
@@ -37,20 +39,24 @@ export function RegisterForm() {
             <TabsContent value="psychologist">
               <PsychologistForm />
             </TabsContent>
+
           </Tabs>
 
           {/* Separador - Linha de divisão */}
-          <Separator className="bg-[#E1E7EF] my-4" />
+          <Separator className="my-4" />
 
           {/* Link para Login */}
           <div className="text-center text-sm">
-            <span className="text-[#666]">Já tem uma conta? </span>
-            <Link href="/login" className="text-[#3D7CDB] font-semibold hover:underline hover:text-[#1C4B9C]">
+            <span className="text-gray-800">Já tem uma conta? </span>
+            <Link href="/login" className="text-blue font-semibold hover:underline hover:text-bluehover">
               Entrar
             </Link>
           </div>
+
         </div>
+
       </Card>
+
     </div>
   )
 }

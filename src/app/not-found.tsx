@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
+import React from "react"
+import Link from "next/link"
+import Image from "next/image"
 
 export default function NotFound() {
   return (
@@ -71,5 +71,5 @@ export default function NotFound() {
         </p>
       </footer>
     </div>
-  );
+  )
 }

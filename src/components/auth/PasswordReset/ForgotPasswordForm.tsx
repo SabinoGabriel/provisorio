@@ -8,20 +8,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
+import { emailForgotPasswordSchema, EmailForgotPasswordData } from "@/types/form"
 
 export function ForgotPasswordForm() {
   const router = useRouter()
 
-  const emailSchema = z.object({
-    email: z
-    .email({ pattern: z.regexes.html5Email, message: "E-mail inválido" })
-    .nonempty("E-mail é obrigatório")
-    .toLowerCase(),
-  })
-
-  const emailInput = useForm<z.infer<typeof emailSchema>>({
-    resolver: zodResolver(emailSchema),
+  // Validação via Zod e react-hook-form
+  const form = useForm<EmailForgotPasswordData>({
+    resolver: zodResolver(emailForgotPasswordSchema),
     mode: "all",
     defaultValues: {
       email: "",
@@ -41,32 +35,32 @@ export function ForgotPasswordForm() {
         />
       </div>
 
-      {/* Título e Descrição */}
+      {/* Título e Subtítulo */}
       <div className="text- flex flex-col items-center justify-center my-2 gap-2">
-        <h2 className="text-2xl font-bold text-[#195FB5]">Recuperação de Senha</h2>
-        <p className="text-base font-medium text-[#686D95]">Informe seu e-mail para a redefinição da sua senha</p>
+        <h2 className="text-2xl font-bold text-bluestrong">Recuperação de Senha</h2>
+        <p className="text-base font-medium text-gray-650">Informe seu e-mail para a redefinição da sua senha</p>
       </div>
 
       {/* Formulário */}
-      <Form {...emailInput}>
+      <Form {...form}>
         <form
           className="w-full flex flex-col items-center gap-6"
-          onSubmit={emailInput.handleSubmit(() => {
+          onSubmit={form.handleSubmit(() => {
             // Futuro: chamada API para solicitar recuperação
             router.push("/recuperar-senha/confirmacao")
           })}
         >
-
+          
           {/* Entrada - E-mail */}
           <FormField 
-            control={emailInput.control}
+            control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem className="w-[32rem] my-6">
                   <FormControl>
                     <div className="w-full">
                         <FormLabel htmlFor="email">E-mail</FormLabel>
-                        <Input {...field} id="email" className="w-full" type="email" placeholder="Informe seu e-mail" />
+                        <Input {...field} id="email" className="w-full"  placeholder="Informe seu e-mail" />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -74,7 +68,7 @@ export function ForgotPasswordForm() {
             )}
           />
 
-          {/* Botão - Submit */}
+          {/* Botão - Redefinir Senha */}
           <Button type="submit" className="h-[3rem] w-[13rem]">
             Redefinir Senha
           </Button>

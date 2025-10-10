@@ -1,16 +1,9 @@
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { ArrowRight } from "lucide-react";
+import { Card } from "@/components/ui/Card"
 
 export default function Home() {
   return (
     <div className="w-full h-screen items-center justify-center flex flex-col space-y-16 p-10">
-      <Button>primary button</Button>
-      <Button variant={"outline"}>
-        secondary button <ArrowRight />
-      </Button>
-      <Button variant={"link"}>link button</Button>
-      <Card>Card Example</Card>
+      <Card>Tela Inicial</Card>
       <footer className="w-full absolute bottom-4 flex flex-col space-y-2 items-center">
         <hr className="w-64" />
         <p className="text-sm">
@@ -27,5 +20,5 @@ export default function Home() {
         </p>
       </footer>
     </div>
-  );
+  )
 }

@@ -1,22 +1,23 @@
 "use client"
-import { useForm } from "react-hook-form";
+
+import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/Input";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Input } from "@/components/ui/Input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/Form"
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/Select";
-import { Button } from "@/components/ui/Button";
-import { patientSchema } from "@/types/form";
-import { PacientFormData } from "@/types/form";
-import { PasswordField } from "@/components/ui/PasswordField";
-import { maskPhone, maskCPF } from "@/utils/masks/masks";
-import { InputGroup, InputGroupAddon, InputGroupText } from "@/components/ui/InputGroup";
-import { toast } from "sonner"
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/Select"
+import { Button } from "@/components/ui/Button"
+import { PasswordField } from "@/components/ui/PasswordField"
+import { maskPhone, maskCPF } from "@/utils/masks/masks"
+import { InputGroup, InputGroupAddon, InputGroupText } from "@/components/ui/InputGroup"
+import { showToast } from "@/components/ui/Toast"
+import { PatientFormData, patientSchema } from "@/types/form"
 
 export function PatientForm() {
-    
-    const router = useRouter();
-    const patientForm = useForm<PacientFormData>({
+    const router = useRouter()
+
+    // Validação a partir do zod e react-hook-form
+    const patientForm = useForm<PatientFormData>({
         resolver: zodResolver(patientSchema),
         mode: "all",
         defaultValues: {
@@ -37,7 +38,7 @@ export function PatientForm() {
         console.log("Paciente:", patientForm.getValues())
         patientForm.trigger().then((isValid) => {
             if (isValid) { 
-                toast("Cadastro realizado com sucesso!", {
+                showToast("error", "Cadastro realizado com sucesso!", {
                     description: "Redirecionando para a validação de código",
                 })
                 setTimeout(() => router.push('/email-confirm'), 2000)
@@ -49,8 +50,11 @@ export function PatientForm() {
 
     return (
         <Form {...patientForm}>
+            {/* Formulário */}
             <form onSubmit={patientForm.handleSubmit(onSubmit)} className="space-y-5">
                 <div className="grid grid-cols-2 gap-x-4 gap-y-5">
+
+                    {/* Entrada - Nome Completo */}
                     <FormField 
                         control={patientForm.control}
                         name="fullName"
@@ -67,6 +71,7 @@ export function PatientForm() {
                         )}
                     />
 
+                    {/* Entrada - Nome Social */}
                     <FormField 
                         control={patientForm.control}
                         name="socialName"
@@ -83,6 +88,7 @@ export function PatientForm() {
                         )}
                     />
 
+                    {/* Entrada - Gênero */}
                     <FormField 
                         control={patientForm.control}
                         name="gender"
@@ -112,6 +118,7 @@ export function PatientForm() {
                         )}
                     />
 
+                    {/* Entrada - Telefone */}
                     <FormField 
                         control={patientForm.control}
                         name="phone"
@@ -122,7 +129,7 @@ export function PatientForm() {
                                     <FormLabel htmlFor="phone">Telefone <span className="text-red-500">*</span></FormLabel>
                                    <InputGroup className="gap-2">
                                         <InputGroupAddon align="inline-start">
-                                            <InputGroupText className="text-[#83828a] font-semibold">+55</InputGroupText>
+                                            <InputGroupText className="text-gray-700 font-semibold">+55</InputGroupText>
                                         </InputGroupAddon>
                                         <Input {...field} id="phone" type="tel" autoComplete="tel" placeholder="(99) 99999-9999" onChange={(e) => field.onChange(maskPhone(e.target.value))} maxLength={15} />
                                     </InputGroup>
@@ -133,6 +140,7 @@ export function PatientForm() {
                         )}
                     />
 
+                    {/* Entrada - Data de Nascimento */}
                     <FormField 
                         control={patientForm.control}
                         name="birthDate"
@@ -155,6 +163,7 @@ export function PatientForm() {
                         )}
                     />
 
+                    {/* Entrada - CPF */}
                     <FormField 
                         control={patientForm.control}
                         name="cpf"
@@ -171,6 +180,7 @@ export function PatientForm() {
                         )}
                     />
 
+                    {/* Entrada - Como nos encontrou? */}
                     <FormField 
                         control={patientForm.control}
                         name="howFoundUs"
@@ -197,6 +207,7 @@ export function PatientForm() {
                         )}
                     />
                     
+                    {/* Entrada - E-mail */}
                     <FormField 
                         control={patientForm.control}
                         name="email"
@@ -213,6 +224,7 @@ export function PatientForm() {
                         )}
                     />
 
+                    {/* Entrada - Senha */}
                     <FormField 
                         control={patientForm.control}
                         name="password"
@@ -229,6 +241,7 @@ export function PatientForm() {
                         )}
                     />
 
+                    {/* Entrada -Confirmar Senha */}
                     <FormField 
                         control={patientForm.control}
                         name="confirmPassword"
@@ -246,10 +259,11 @@ export function PatientForm() {
                     />
                 </div>
 
+                {/* Botão - Cadastrar */}
                 <Button type="submit" variant="default" className="w-full h-12">
                     Cadastrar
                 </Button>
             </form>
         </Form>
-  );
+  )
 }

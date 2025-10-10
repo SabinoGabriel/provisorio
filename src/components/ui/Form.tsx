@@ -96,7 +96,7 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && "text-destructive", "text-[0.8rem] text-[#575757] font-semibold", className)}
+      className={cn(error && "text-destructive", "text-[0.8rem] text-gray-900 font-semibold", className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -120,7 +120,7 @@ const FormControl = React.forwardRef<
           : `${formDescriptionId} ${formMessageId}`
       }
       aria-invalid={!!error}
-      className={cn("w-full rounded-xl bg-input border border-[#d6d6d6] px-4 py-2", error && "border-destrutive")}
+      className={cn("w-full rounded-xl bg-input border border-gray-350 px-4 py-2", error && "border-destructive")}
       {...props}
     />
   )
@@ -159,7 +159,7 @@ const FormMessage = React.forwardRef<
     <p
     ref={ref}
     id={formMessageId}
-    className={cn("flex gap-2 items-center text-xs pl-2 font-medium text-destrutive", className)}
+    className={cn("flex gap-2 items-center text-xs pl-2 font-medium text-destructive", className)}
     {...props}
     >
       <CircleAlert className="h-3 w-3" />

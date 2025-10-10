@@ -14,7 +14,6 @@ export const loginSchema = z.object({
     password: z
       .string()
       .nonempty("Senha é obrigatória")
-      .min(8, "Senha deve ter ao menos 8 caracteres"),
 })
 
 // Schema do cadastro de paciente
@@ -94,9 +93,8 @@ export const patientSchema = z.object({
       .nonempty("Senha é obrigatória")
       .min(8, "Senha fraca, utilize letras e números")
       .refine((val) => /[0-9]/.test(val), "Senha deve conter pelo menos um número")
-      .refine((val) => /[A-Za-z]/.test(val), {
-        message: "Senha deve conter pelo menos uma letra",
-      }),
+      .refine((val) => /[A-Za-z]/.test(val), "Senha deve conter pelo menos uma letra")
+      .refine((val) => /[\_!@#$%^&*+~=\.\-]/.test(val), "Senha deve conter pelo menos um caractere especial"),
     confirmPassword: z
       .string()
       .nonempty("Confirmar senha é obrigatório"),
@@ -105,7 +103,7 @@ export const patientSchema = z.object({
         error: "Selecione uma opção",
       })
       .nonoptional("Campo obrigatório"),
-  }).refine((data) => data.password === data.confirmPassword, {
+}).refine((data) => data.password === data.confirmPassword, {
       message: "As senhas não coincidem",
       path: ["confirmPassword"],
       when(payload) { 
@@ -113,7 +111,7 @@ export const patientSchema = z.object({
         .pick({ password: true, confirmPassword: true })
         .safeParse(payload.value).success
       },  
-  })
+})
 
 // Schema do cadastro de psicólogo
 export const psychologistSchema = patientSchema.safeExtend({
@@ -135,11 +133,52 @@ export const psychologistSchema = patientSchema.safeExtend({
       .string()
       .trim()
       .nonempty("Expectativa é obrigatória"),
-  })
+})
 
+// Schema do Email da inserção do email para redefinição de senha
+export const emailForgotPasswordSchema = z.object({
+  email: z
+  .email({ pattern: z.regexes.html5Email, message: "E-mail inválido" })
+  .nonempty("E-mail é obrigatório")
+  .toLowerCase(),
+})
 
-export type PsychologistFormData = z.infer<typeof psychologistSchema>
+// Schema da Redefinição de Senha
+export const resetPasswordSchema = z.object({
+  password: z
+    .string()
+    .nonempty("Senha é obrigatória")
+    .min(8, "Senha fraca, utilize letras e números")
+    .refine((val) => /[0-9]/.test(val), "Senha deve conter pelo menos um número")
+    .refine((val) => /[A-Za-z]/.test(val), "Senha deve conter pelo menos uma letra")
+    .refine((val) => /[\_!@#$%^&*+~=\.\-]/.test(val), "Senha deve conter pelo menos um caractere especial"),
+  confirmPassword: z
+    .string()
+    .nonempty("Confirmar senha é obrigatório"),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "As senhas não coincidem",
+    path: ["confirmPassword"],
+    when(payload) { 
+      return resetPasswordSchema
+      .pick({ password: true, confirmPassword: true })
+      .safeParse(payload.value).success
+    },  
+})
 
-export type PacientFormData = z.infer<typeof patientSchema>
-
+// Schema do Código de Verificação
+export const verificationCodeSchema = z.object({
+  code: z
+    .string()
+    .nonempty("Código de verificação é obrigatório")
+    .regex(/^\d+$/, "Código de verificação deve conter apenas números")
+    .refine((value) => /^\d{6}$/.test(value), {
+      message: "Código de verificação deve conter 6 dígitos",
+    }),
+})
+  
 export type LoginFormData = z.infer<typeof loginSchema>
+export type PatientFormData = z.infer<typeof patientSchema>
+export type PsychologistFormData = z.infer<typeof psychologistSchema>
+export type EmailForgotPasswordData = z.infer<typeof emailForgotPasswordSchema>
+export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>
+export type RecoveryCodeFormData = z.infer<typeof verificationCodeSchema>
