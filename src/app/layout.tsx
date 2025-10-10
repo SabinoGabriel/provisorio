@@ -1,16 +1,19 @@
-import type { Metadata } from "next";
-import { Montserrat, Unbounded } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from "next"
+import "./globals.css"
+import { Montserrat, Unbounded } from "next/font/google"
+import { Toaster } from "@/components/ui/Sonner"
 
 const unbounded = Unbounded({
   variable: "--font-unbounded",
   subsets: ["latin"],
-});
+  display: "swap",
+})
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-});
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Psicólogos no Nordeste",
@@ -21,17 +24,18 @@ export const metadata: Metadata = {
   creator: "Seed a Bit",
   publisher: "Seed a Bit",
   abstract: "Descrição do App",
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
     return (
         <html lang='pt-BR'>
             <head>
-                <link rel="preload" href="/images/seed-a-mascot.svg" as="image" />
+                <meta charSet="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link rel="icon" type="image/png" href="/icons/favicon-96x96.png" sizes="96x96" />
                 <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
                 <link rel="shortcut icon" href="/icons/favicon.ico" />
@@ -39,9 +43,10 @@ export default function RootLayout({
                 <link rel="manifest" href="/icons/site.webmanifest" />
             </head>
             <body
-                className={`${montserrat.variable} ${unbounded.variable} font-sans antialiased`}
+                className={`${unbounded.variable} ${montserrat.variable} font-sans antialiased`}
             >
                 {children}
+                <Toaster />
             </body>
         </html>
     )

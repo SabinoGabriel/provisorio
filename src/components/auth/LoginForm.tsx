@@ -1,88 +1,109 @@
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
-import { ContainerInput } from "@/components/ui/ContainerInput";
-import Link from "next/link";
-import { Separator } from "@/components/ui/Separator";
+"use client"
+import { Button } from "@/components/ui/Button"
+import { Card } from "@/components/ui/Card"
+import { Input } from "@/components/ui/Input"
+import { Separator } from "@/components/ui/Separator"
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage} from "@/components/ui/Form"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { PasswordField } from "@/components/ui/PasswordField"
+import { loginSchema, LoginFormData } from "@/types/form"
+import Link from "next/link"
 
 export function LoginForm() {
+
+  // Validação via Zod e react-hook-form
+  const form = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    mode: "all",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  })
+
+  function onSubmit(data: LoginFormData) {
+    console.log("Usuário logado:", data)
+  }
+
   return (
     <div className="flex flex-col justify-center py-16">
 
-      {/* Título e Descrição */}
-       <div className="text-center flex flex-col mb-16 gap-2">
-        <h1 className="text-4xl text-white font-semibold tracking-tight">Acesse sua conta</h1>
-        <p className="text-2xl text-[#EEF5FF] font-normal text-muted-foreground">Comece sua jornada de cuidado</p>
-      </div>
-
       {/* Container do Formulário */}
-      <Card 
-        className="bg-white border border-[#E5E5E5]"
-        style={{
-          width: 800,
-          padding: 32,
-          boxSizing: "border-box",
-          borderRadius: 24,
-          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)"
-        }}>
+      <Card className="w-[36rem]">
 
-        {/* Título */}
-        <h2 className="text-center text-2xl font-bold text-[#195FB5] mb-6">
-          Login
-        </h2>
-
-        {/* Formulário */}
-        <form className="w-full">
-          <div className="grid w-full items-center gap-4">
-
-            {/* E-mail */}
-            <div className="flex flex-col">
-              <ContainerInput title="E-mail">
-                <Input
-                  type="email"
-                  placeholder="Digite seu e-mail"
-                />
-              </ContainerInput>
-            </div>
-
-            {/* Senha */}
-            <div className="flex flex-col">
-              <ContainerInput title="Senha">
-                <Input
-                  type="password"
-                  placeholder="Digite sua senha"
-                />
-              </ContainerInput>
-            </div>
-
-            {/* Link para Recuperação de Senha */}
-            <Link href="/recuperar-senha" className="text-[#3D7CDB] mb-4 text-sm font-semibold hover:underline hover:text-[#1C4B9C]">
-                Esqueci a senha
-            </Link>
-          </div>
-        </form>
-
-        {/* Botão Entrar */}
-        <div className="flex items-center justify-between mb-8">
-          <Button
-            type="submit"
-            className="w-full bg-[#983DEB] hover:bg-[#7B26C8] text-white h-12 rounded-xl"
-          >
-            Entrar
-          </Button>
+        {/* Título e Subtítulo */}
+        <div className="text-center flex flex-col mb-10 gap-1">
+          <h1 className="text-2xl text-bluestrong font-semibold">Acesse sua conta</h1>
+          <p className="text-lg text-gray-650 font-medium text-muted-foreground">É um prazer ter você de novo com a gente!</p>
         </div>
 
+        {/* Formulário */}
+        <Form {...form}>
+          <form className="w-full space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex flex-col w-full gap-4">
+              {/* E-mail */}
+              <FormField 
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                      <FormControl>
+                        <div className="w-full">
+                            <FormLabel>E-mail</FormLabel>
+                            <Input {...field} className="w-full"  placeholder="Informe seu e-mail" />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Senha */}
+              <FormField 
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                      <FormControl>
+                        <div>
+                            <FormLabel>Senha</FormLabel>
+                            <PasswordField {...field} className="w-full" placeholder="Informe sua senha" />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            
+            {/* Link para Recuperação de Senha */}
+            <Link href="/recuperar-senha" className="text-blue w-fit text-sm flex font-semibold hover:underline hover:text-bluehover">
+                Esqueci a senha
+            </Link>
+
+            {/* Botão Entrar */}
+            <Button type="submit" variant="default" className="w-full h-12">
+              Entrar
+            </Button>
+
+          </form>
+          
+        </Form>
+
         {/* Separador - Linha de divisão */}
-        <Separator className="bg-[#E1E7EF]" />
+        <Separator className="my-4" />
 
         {/* Link para Cadastro */}
-        <div className="text-center mt-6 text-sm">
-          <span className="text-[#666]">Não tem uma conta? </span>
-          <Link href="/cadastro" className="text-[#3D7CDB] font-semibold hover:underline hover:text-[#1C4B9C]">
+        <div className="text-center text-sm">
+          <span className="text-gray-800">Não tem uma conta? </span>
+          <Link href="/cadastro" className="text-blue font-semibold hover:underline hover:text-bluehover">
             Criar Conta
           </Link>
         </div>
+
       </Card>
+
     </div>
-  );
+  )
 }

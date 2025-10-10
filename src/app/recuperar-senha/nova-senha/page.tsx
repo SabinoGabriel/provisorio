@@ -1,14 +1,10 @@
-import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
+import { ResetPasswordForm } from "@/components/auth/PasswordReset/ResetPasswordForm"
 
 export default function ResetPasswordPage() {
   return (
-    <main
-      className="min-h-screen flex items-center justify-center p-4"
-      style={{
-        background: "linear-gradient(0deg, #8E4BF2 0%, #009DEB 85%, #2fbaff 100%)",
-      }}
-    >
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-t from-bluesoft via-bluemiddle via-10% to-primary p-4">
+      {/* Formulário de Redefinição de Senha */}
       <ResetPasswordForm />
     </main>
-  );
+  )
 }

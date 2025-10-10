@@ -5,17 +5,46 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --bg-primary: #8e4bf2;
-  --bg-primary-hover: #7a3ee0;
-  --secondary: #3d7cdb;
-  --bg-input: #FBFCFD;
-  --stroke-input: #E1E7EF;
+
+  --primary: #8e4bf2;            /* botão / gradiente */
+  --primary-hover: #8e4bf2e3;    /* hover do botão */
+  
+  --blue: #3D7CDB;               /* links (ex: esqueci senha) */
+  --blue-hover: #1C4B9C;         /* hover de link */
+  --blue-strong: #195FB5;        /* títulos de login/cadastro */
+  
+  --blue-soft: #2fbaff;          /* gradiente */
+  --blue-middle: #009DEB;        /* gradiente */
+
+  --input: #FBFCFD;              /* background input */
+  --border-button: #626790;      /* border botão */
+  --destructive: #ef4444;        /* erro */
+
+  --gray-50: #F5F5F5;            /* background input otp slot / hover select item */
+  --gray-100: #F1F5F9;           /* background tabs list */
+  --gray-150: #f2f2f5;           /* background hover olho senha */
+  --gray-200: #E5E5E5;           /* border card */
+  --gray-250: #E1E7EF;           /* stroke input / separator */
+  --gray-300: #D7E0ED;           /* background progress bar */
+  --gray-350: #D6D6D6;           /* border formcontrol */
+  --gray-400: #D2D2D2;           /* border otp slot */
+  --gray-500: #a7a7a7;           /* texto contador caracteres */
+  --gray-550: #a5a4af;           /* placeholder input */
+  --gray-600: #92919c;           /* placeholder select */
+  --gray-650: #9098a3;           /* texto subtítulo / tab inativo */
+  --gray-700: #83828a;           /* texto código +55 telefone */
+  --gray-750: #696969;           /* texto tab ativo / etapa / textarea */
+  --gray-800: #666;              /* texto "não tem conta" */
+  --gray-850: #606064;           /* texto input preenchido / textarea */
+  --gray-900: #575757;           /* label forms */
+
+  --inative-tab: #686D95;
 }
 
 @media (prefers-color-scheme: white) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #ff0000;
   }
 }
 
@@ -30,4 +59,22 @@ body {
 
 h1 {
   font-family: "Unbounded", sans-serif;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px var(--input) inset !important; /* substitui a cor */
+  box-shadow: 0 0 0px 1000px var(--input) inset !important;
+  -webkit-text-fill-color: #606064 !important; /* cor do texto */
+}
+
+[data-sonner-toast] [data-description] {
+  color: #606064 !important; 
+}
+
+[data-sonner-toaster][data-sonner-theme=dark] [data-description] {
+  color: #606064 !important; 
 }

@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/Button";
-import Image from "next/image";
+import Link from "next/link"
+import { Button } from "@/components/ui/Button"
+import Image from "next/image"
 
 export default function Topbar() {
   return (
@@ -36,5 +36,5 @@ export default function Topbar() {
         <Button className="w-28">Entrar</Button>
       </Link>
     </div>
-  );
+  )
 }

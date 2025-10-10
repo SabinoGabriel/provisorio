@@ -1,13 +1,10 @@
-import { PasswordRecoveryConfirmation } from "@/components/auth/PasswordRecoveryConfirmation"
+import { PasswordRecoveryConfirmation } from "@/components/auth/PasswordReset/PasswordRecoveryConfirmation"
+
 export default function ConfirmationPage() {
   return (
-    <main
-      className="min-h-screen flex items-center justify-center p-4"
-      style={{
-        background: "linear-gradient(0deg, #8E4BF2 0%, #009DEB 85%, #2fbaff 100%)",
-      }}
-    >
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-t from-bluesoft via-bluemiddle via-10% to-primary p-4">
+      {/* Página de Mensagem */}
       <PasswordRecoveryConfirmation />
     </main>
-  );
+  )
 }
