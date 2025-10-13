@@ -8,6 +8,13 @@ export default {
   ],
   theme: {
     extend: {
+      borderWidth: {
+        hairline: '0.0625rem',
+      },
+      spacing: {
+            header: '4rem', 
+            logo: '10rem', 
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

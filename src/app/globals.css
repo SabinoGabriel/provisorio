@@ -66,8 +66,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px var(--input) inset !important; /* substitui a cor */
-  box-shadow: 0 0 0px 1000px var(--input) inset !important;
+  -webkit-box-shadow: 0 0 0 62.5rem var(--input) inset !important; /* 1000px => 62.5rem (16px base) */
+  box-shadow: 0 0 0 62.5rem var(--input) inset !important;
   -webkit-text-fill-color: #606064 !important; /* cor do texto */
 }
 
@@ -77,4 +77,25 @@ input:-webkit-autofill {
 
 [data-sonner-toaster][data-sonner-theme=dark] [data-description] {
   color: #606064 !important; 
+}
+
+@layer components {
+  .topbar {
+    @apply sticky top-0 z-40 w-full h-header bg-white border-b-hairline border-[#E8E8E8] transition-transform duration-200 will-change-transform;
+  }
+  .topbar-container {
+    @apply h-full w-full flex items-center justify-between pl-6 pr-6;
+  }
+  .topbar-logo {
+    @apply h-10 w-auto;
+  }
+  .topbar-nav {
+    @apply flex items-center gap-8 text-[0.875rem] leading-[2.625rem];
+  }
+  .topbar-link {
+    @apply flex items-center justify-center font-medium text-[#686D95] hover:text-[#525a86];
+  }
+  .topbar-link-active {
+    @apply font-bold text-[#4f557a];
+  }
 }

@@ -9,7 +9,7 @@ import { PsychologistForm } from "@/components/auth/PsychologistForm/Psychologis
 export function RegisterForm() {
 
   return (
-    <div className="max-h-screen flex flex-col justify-center py-16">
+    <div className="flex flex-col justify-center py-16">
       
       {/* Container do Formulário */}
       <Card>
