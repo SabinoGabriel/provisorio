@@ -1,4 +1,3 @@
-import { showToast } from '@/components/ui/Toast'
 import axios from 'axios'
 
 if (!process.env.NEXT_PUBLIC_API_URL) {

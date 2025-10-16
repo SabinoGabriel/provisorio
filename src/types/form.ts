@@ -18,7 +18,7 @@ export const loginSchema = z.object({
 
 // Schema do cadastro de paciente
 export const patientSchema = z.object({
-    fullName: z
+    name: z
       .string()
       .trim()
       .nonempty("Nome completo é obrigatório")
@@ -57,19 +57,19 @@ export const patientSchema = z.object({
         /^[A-Za-zÀ-ú]+(?: {1,2}[A-Za-zÀ-ú]+)+$/,
         "Deve conter ao menos nome e sobrenome, apenas letras são permitidas"
       ),
-    socialName: z
+    chosen_name: z
       .string()
       .trim()
       .regex(/^[A-Za-zÀ-ú\s]*$/, "Só pode conter letras")
       .optional(),
-    phone: z
+    phone_number: z
       .string()
       .nonempty("Telefone é obrigatório")
       // remove caracteres não numéricos antes de validar
       .refine((value) => value.replace(/\D/g, "").length === 11, {
         message: "Telefone deve conter 11 dígitos numéricos",
       }),
-    birthDate: z
+    birth_date: z
       .coerce.date<Date>({ error: "Data de nascimento é obrigatória" })
       .min(minDate, "Data de nascimento inválida")
       .max(maxDate, "Você deve ser maior de 18 anos para se cadastrar"),
@@ -78,7 +78,7 @@ export const patientSchema = z.object({
       .nonempty("E-mail é obrigatório")
       .toLowerCase(),
     gender: z
-      .enum(["woman", "man", "trans-woman", "trans-man", "non-binary", "other", "none"], {
+      .enum(["CIS_WOMAN", "CIS_MAN", "TRANS_WOMAN", "TRANS_MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"], {
         error: "Selecione uma opção",
       })
       .nonoptional("Campo obrigatório"),
@@ -95,41 +95,43 @@ export const patientSchema = z.object({
       .refine((val) => /[0-9]/.test(val), "Senha deve conter pelo menos um número")
       .refine((val) => /[A-Za-z]/.test(val), "Senha deve conter pelo menos uma letra")
       .refine((val) => /[\_!@#$%^&*+~=\.\-]/.test(val), "Senha deve conter pelo menos um caractere especial"),
-    confirmPassword: z
+    confirm_password: z
       .string()
       .nonempty("Confirmar senha é obrigatório"),
-    howFoundUs: z
-      .enum(["google", "instagram", "facebook", "other"], {
+    how_found_us: z
+      .enum(["GOOGLE", "INSTAGRAM", "FACEBOOK", "OTHER"], {
         error: "Selecione uma opção",
       })
       .nonoptional("Campo obrigatório"),
-}).refine((data) => data.password === data.confirmPassword, {
-      message: "As senhas não coincidem",
+}).refine((data) => {
+    return data.password === data.confirm_password
+  }, {
       path: ["confirmPassword"],
+      message: "As senhas não coincidem",
       when(payload) { 
         return patientSchema
-        .pick({ password: true, confirmPassword: true })
+        .pick({ password: true, confirm_password: true })
         .safeParse(payload.value).success
       },  
-})
+ })
 
 // Schema do cadastro de psicólogo
 export const psychologistSchema = patientSchema.safeExtend({
     crp: z
       .string()
       .nonempty("CRP é obrigatório")
-      .refine((value) => /^\d{2}\/\d{6}$/.test(value) || /^\d{8}$/.test(value), {
-        message: "CRP deve conter 8 dígitos",
+      .refine((value) => /^\d{2}\/\d{5}$/.test(value) || /^\d{7}$/.test(value), {
+        message: "CRP deve conter 7 dígitos",
       }),
-    professionalDescription: z.
+    about_you: z.
       string()
       .trim()
       .nonempty("Experiência profissional é obrigatória"),
-    academicBackground: z
+    education_and_specializations: z
       .string()
       .trim()
       .nonempty("Formação acadêmica é obrigatória"),
-    platformExpectation: z
+    platform_expectations: z
       .string()
       .trim()
       .nonempty("Expectativa é obrigatória"),

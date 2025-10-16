@@ -28,7 +28,7 @@ export function ResetPasswordForm() {
     showToast("success", "Senha redefinida com sucesso!", {
       description: "Redirecionando para o login",
     })
-    setTimeout(() => router.push('/login'), 2000)
+    setTimeout(() => router.push('/login'), 1200)
   }
 
   return (
@@ -65,7 +65,7 @@ export function ResetPasswordForm() {
               <FormItem className="w-[32rem]">
                   <FormControl>
                     <div className="w-full">
-                        <FormLabel htmlFor="password">Nova senha <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel htmlFor="password">Nova senha <span className="text-destructive">*</span></FormLabel>
                         <PasswordField
                           id="password"
                           placeholder="Digite sua nova senha"
@@ -86,7 +86,7 @@ export function ResetPasswordForm() {
               <FormItem className="w-[32rem]">
                   <FormControl>
                     <div className="w-full">
-                        <FormLabel htmlFor="confirmPassword">Confirmar senha <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel htmlFor="confirmPassword">Confirmar senha <span className="text-destructive">*</span></FormLabel>
                         <PasswordField
                           id="confirmPassword"
                           placeholder="Digite sua nova senha"

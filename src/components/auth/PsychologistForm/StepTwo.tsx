@@ -20,8 +20,8 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
                 <FormItem className="col-span-2 self-start">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="crp">CRP <span className="text-red-500">*</span></FormLabel>
-                            <Input {...field} id="crp" placeholder="00/000000" onChange={(e) => field.onChange(maskCRP(e.target.value))} maxLength={9} />
+                            <FormLabel htmlFor="crp">CRP <span className="text-destructive">*</span></FormLabel>
+                            <Input {...field} id="crp" placeholder="00/00000" onChange={(e) => field.onChange(maskCRP(e.target.value))} maxLength={8} />
                         </div>
                     </FormControl>
                     <FormMessage />
@@ -32,16 +32,15 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
         {/* Entrada - Experiência Profissional */}
         <FormField 
             control={form.control}
-            name="professionalDescription"
+            name="about_you"
             render={({ field }) => (
                 <FormItem className="col-span-2">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="professionalDescription">Experiência Profissional <span className="text-red-500">*</span></FormLabel>
+                            <FormLabel htmlFor="about_you">Experiência Profissional <span className="text-destructive">*</span></FormLabel>
                             <InputGroup>
                                 <InputGroupTextarea {...field} 
-                                    id="professionalDescription"
-                                    data-slot="input-group-control"
+                                    id="about_you"
                                     placeholder="Conte um pouco sobre sua trajetória profissional"
                                     maxLength={1000}
                                 />
@@ -59,16 +58,15 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
         {/* Entrada - Formação e Especializações */}
         <FormField 
             control={form.control}
-            name="academicBackground"
+            name="education_and_specializations"
             render={({ field }) => (
                 <FormItem className="col-span-2">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="academicBackground1">Formação e Especializações <span className="text-red-500">*</span></FormLabel>
+                            <FormLabel htmlFor="education_and_specializations">Formação e Especializações <span className="text-destructive">*</span></FormLabel>
                              <InputGroup>
                                 <InputGroupTextarea {...field} 
-                                    id="academicBackground1"
-                                    data-slot="input-group-control"
+                                    id="education_and_specializations"
                                     placeholder="Conte um pouco sobre sua formação e áreas de especialização"
                                     maxLength={1000}
                                 />
@@ -86,16 +84,15 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
         {/* Entrada - Expectativas sobre a Plataforma */}
         <FormField 
             control={form.control}
-            name="platformExpectation"
+            name="platform_expectations"
             render={({ field }) => (
                 <FormItem className="col-span-2">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="platformExpectation">Quais são as suas expectativas em relação à plataforma? <span className="text-red-500">*</span></FormLabel>
+                            <FormLabel htmlFor="platform_expectations">Quais são as suas expectativas em relação à plataforma? <span className="text-destructive">*</span></FormLabel>
                             <InputGroup>
                                 <InputGroupTextarea {...field} 
-                                    id="platformExpectation"
-                                    data-slot="input-group-control"
+                                    id="platform_expectations"
                                     placeholder="Compartilhe o que espera vivenciar ou alcançar aqui"
                                     maxLength={500}
                                 />
@@ -113,21 +110,21 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
         {/* Entrada - Como nos encontrou? */}
         <FormField 
             control={form.control}
-            name="howFoundUs"
+            name="how_found_us"
             render={({ field }) => (
                 <FormItem className="col-span-2">
                     <FormControl>
                     <div>
-                        <FormLabel htmlFor="howFoundUs">Como você nos encontrou? <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel htmlFor="how_found_us">Como você nos encontrou? <span className="text-destructive">*</span></FormLabel>
                         <Select {...field} onValueChange={field.onChange} value={field.value || ""}>
-                            <SelectTrigger id="howFoundUs">
+                            <SelectTrigger id="how_found_us">
                                 <SelectValue placeholder="Selecione" />
                             </SelectTrigger>
-                            <SelectContent onCloseAutoFocus={() => form.trigger("howFoundUs")}>
-                                <SelectItem value="google">Google</SelectItem>
-                                <SelectItem value="instagram">Instagram</SelectItem>
-                                <SelectItem value="facebook">Facebook</SelectItem>
-                                <SelectItem value="other">Outro</SelectItem>
+                            <SelectContent onCloseAutoFocus={() => form.trigger("how_found_us")}>
+                                <SelectItem value="GOOGLE">Google</SelectItem>
+                                <SelectItem value="INSTAGRAM">Instagram</SelectItem>
+                                <SelectItem value="FACEBOOK">Facebook</SelectItem>
+                                <SelectItem value="OTHER">Outro</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>

@@ -20,5 +20,5 @@ export function maskCRP(value: string): string {
   return value
     .replace(/\D/g, "")
     .replace(/(\d{2})(\d)/, "$1/$2")
-    .slice(0, 9)
+    .slice(0, 8)
 }

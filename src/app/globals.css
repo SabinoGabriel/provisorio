@@ -71,10 +71,20 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #606064 !important; /* cor do texto */
 }
 
+[data-sonner-toast][data-styled=true] [data-title] {
+  font-weight: bolder !important;
+}
+
 [data-sonner-toast] [data-description] {
   color: #606064 !important; 
+  font-size: 12px !important;
 }
 
 [data-sonner-toaster][data-sonner-theme=dark] [data-description] {
   color: #606064 !important; 
+}
+
+[data-sonner-toast][data-styled=true] [data-content] {
+  align-self: self-start !important;
+  padding: 0.5rem !important;
 }

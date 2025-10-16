@@ -13,6 +13,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Progress } from "@/components/ui/Progress"
 import { cn } from "@/utils/lib/tailwind-merge"
 import { psychologistSchema, PsychologistFormData } from "@/types/form"
+import { registerPsychologist } from "@/services/auth"
+import { RegisterPsychologistFormData } from "@/types/auth"
 
 export function PsychologistForm() {
     const [step, setStep] = useState(1)
@@ -23,43 +25,38 @@ export function PsychologistForm() {
         resolver: zodResolver(psychologistSchema),
         mode: "all",
         defaultValues: {
-            fullName: "",
-            socialName: "",
-            phone: "",
+            name: "",
+            chosen_name: "",
+            phone_number: "",
             cpf: "",
-            birthDate: undefined,
+            birth_date: undefined,
             gender: undefined,
             email: "",
             password: "",
-            confirmPassword: "",
-            howFoundUs: undefined,
+            confirm_password: "",
+            how_found_us: undefined,
             crp: "",
-            professionalDescription: "",
-            academicBackground: "",
-            platformExpectation: "",
+            about_you: "",
+            education_and_specializations: "",
+            platform_expectations: "",
         },
     })
 
-    // Simula submissão para a API substitua pela chamada real
-    const fakeSubmit = () => new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 800))
-
-    async function onSubmit() {
-        const values = psychologistForm.getValues()
-        console.log("Psicólogo:", values)
-        try {
-            const ok = await fakeSubmit()
-            if (ok) {
-                showToast("success", "Cadastro realizado com sucesso!", { 
-                    description: "Verifique seu e-mail para confirmação." 
+    // Submissão do formulário
+    function onSubmit(data: RegisterPsychologistFormData) {
+        registerPsychologist(data)
+            .then(() => {
+                showToast("success", "Cadastro realizado com sucesso!", {
+                    description: "Redirecionando para a validação de código",
                 })
                 setTimeout(() => router.push('/email-confirm'), 1200)
-            } else {
-                showToast("error", "Não foi possível concluir o cadastro. Tente novamente.")
-            }
-        } catch (error) {
-            console.error(error)
-            showToast("error", "Erro ao cadastrar. Verifique sua conexão.")
-        }
+            })
+            .catch(error => {
+                console.log('Erro no cadastro de psicólogo:', error)
+                showToast("error", "Erro", {
+                    description: error.message
+                })
+            })
     }
 
     return (
@@ -86,20 +83,19 @@ export function PsychologistForm() {
                         e.preventDefault()
                         if (step === 1) {
                             psychologistForm
-                                .trigger([ 
-                                    "fullName", "phone", "birthDate", "gender", "email", "cpf", "password", "confirmPassword"
-                                ])
+                                .trigger(["name", "birth_date", "gender", "email", "cpf", "password", "confirm_password"])
                                 .then((valid) => { 
-                                    if (valid) setStep(2)
+                                    if (valid) {
+                                        setStep(2)
+                                    }
                                 })
                         }
                         if (step === 2 && psychologistForm.formState.isValid) {
                             psychologistForm
-                                .trigger([
-                                    "crp", "professionalDescription", "academicBackground", "platformExpectation", "howFoundUs",
-                                ]).then((valid) => {
-                                    if (valid)  onSubmit()
-                            })
+                                .trigger(["crp", "about_you", "education_and_specializations", "platform_expectations", "how_found_us"])
+                                .then((valid) => {
+                                    if (valid) onSubmit(psychologistForm.getValues())
+                                })
                         } 
                     }} className={cn("w-32", step === 2 && "w-40")}>
                         {step === 1 ? 'Avançar' :  'Finalizar Cadastro'} 

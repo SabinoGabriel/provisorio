@@ -28,13 +28,16 @@ export function LoginForm() {
     })
 
     function onSubmit(data: LoginFormData) {
-        login(data.email, data.password).then(tokens => {
-            showToast('success', 'Login realizado com sucesso!')
-            setToken(tokens.accessToken)
-            router.push('/dashboard')
-        }).catch(error => {
-            showToast('error', error.message)
-        })
+        login(data)
+            .then(tokens => {
+                showToast('success', 'Login realizado com sucesso!')
+                setToken(tokens.accessToken)
+                router.push('/dashboard')
+            }).catch(error => {
+                showToast('error', 'Erro', {
+                    description: error.message
+                })
+            })
     }
 
     return (
@@ -61,8 +64,8 @@ export function LoginForm() {
                                     <FormItem>
                                         <FormControl>
                                             <div className="w-full">
-                                                <FormLabel>E-mail</FormLabel>
-                                                <Input {...field} className="w-full" placeholder="Informe seu e-mail" />
+                                                <FormLabel htmlFor="email">E-mail</FormLabel>
+                                                <Input {...field} id="email" className="w-full" placeholder="Informe seu e-mail" />
                                             </div>
                                         </FormControl>
                                         <FormMessage />
@@ -78,8 +81,8 @@ export function LoginForm() {
                                     <FormItem>
                                         <FormControl>
                                             <div>
-                                                <FormLabel>Senha</FormLabel>
-                                                <PasswordField {...field} className="w-full" placeholder="Informe sua senha" />
+                                                <FormLabel htmlFor="password">Senha</FormLabel>
+                                                <PasswordField {...field} id="password" className="w-full" placeholder="Informe sua senha" />
                                             </div>
                                         </FormControl>
                                         <FormMessage />
