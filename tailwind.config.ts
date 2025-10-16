@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 export default {
   content: [
@@ -57,5 +58,61 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addComponents, theme }) => {
+      addComponents({
+        ".topbar": {
+          position: "sticky",
+          top: "0",
+          width: "100%",
+          height: theme("spacing.header"),
+          backgroundColor: theme("colors.white"),
+          borderBottomWidth: theme("borderWidth.hairline"),
+          borderBottomColor: "#E8E8E8",
+          zIndex: "40",
+          transitionProperty: "transform",
+          transitionDuration: theme("transitionDuration.200", "200ms"),
+          willChange: "transform",
+        },
+        ".topbar-container": {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+          height: "100%",
+          paddingLeft: theme("spacing.6"),
+          paddingRight: theme("spacing.6"),
+        },
+        ".topbar-logo": {
+          position: "relative",
+          display: "block",
+          height: theme("spacing.10"),
+          width: theme("spacing.logo"),
+        },
+        ".topbar-nav": {
+          display: "flex",
+          alignItems: "center",
+          gap: theme("spacing.8"),
+          fontSize: "0.875rem",
+          lineHeight: "2.625rem",
+        },
+        ".topbar-link": {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontWeight: "500",
+          color: "#686D95",
+          transitionProperty: "color",
+          transitionDuration: theme("transitionDuration.200", "200ms"),
+        },
+        ".topbar-link:hover": {
+          color: "#525a86",
+        },
+        ".topbar-link-active": {
+          fontWeight: "700",
+          color: "#4f557a",
+        },
+      })
+    }),
+  ],
 } satisfies Config;

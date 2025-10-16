@@ -44,12 +44,12 @@ export default function Topbar() {
 
   return (
     <header
-      className={["topbar", hidden ? "-translate-y-full" : "translate-y-0"].join(" ")}
+      className={`topbar ${hidden ? "-translate-y-full" : "translate-y-0"}`}
       aria-label="Barra de navegação"
     >
       <div className="topbar-container">
         <Link href="/" className="flex items-center gap-3">
-          <span className="relative block h-10 w-logo">
+          <span className="relative block topbar-logo">
             <Image
               src="/images/psicologos-ne-main-logo.svg"
               alt="Psicólogos no Nordeste - logo"
@@ -64,7 +64,7 @@ export default function Topbar() {
         {/* Navegação desktop */}
         <nav className="topbar-nav">
           <Link
-            className={["topbar-link", isHome ? "topbar-link-active" : ""].join(" ")}
+            className={isHome ? "topbar-link topbar-link-active" : "topbar-link"}
             href="/"
             aria-current={isHome ? "page" : undefined}
           >

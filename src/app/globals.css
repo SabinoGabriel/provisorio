@@ -72,30 +72,19 @@ input:-webkit-autofill {
 }
 
 [data-sonner-toast] [data-description] {
-  color: #606064 !important; 
+  color: #606064 !important;
+  font-size: 12px !important;
 }
 
 [data-sonner-toaster][data-sonner-theme=dark] [data-description] {
-  color: #606064 !important; 
+  color: #606064 !important;
 }
 
-@layer components {
-  .topbar {
-    @apply sticky top-0 z-40 w-full h-header bg-white border-b-hairline border-[#E8E8E8] transition-transform duration-200 will-change-transform;
-  }
-  .topbar-container {
-    @apply h-full w-full flex items-center justify-between pl-6 pr-6;
-  }
-  .topbar-logo {
-    @apply h-10 w-auto;
-  }
-  .topbar-nav {
-    @apply flex items-center gap-8 text-[0.875rem] leading-[2.625rem];
-  }
-  .topbar-link {
-    @apply flex items-center justify-center font-medium text-[#686D95] hover:text-[#525a86];
-  }
-  .topbar-link-active {
-    @apply font-bold text-[#4f557a];
-  }
+[data-sonner-toast][data-styled=true] [data-title] {
+  font-weight: bolder !important;
+}
+
+[data-sonner-toast][data-styled=true] [data-content] {
+  align-self: self-start !important;
+  padding: 0.5rem !important;
 }
