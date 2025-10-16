@@ -40,7 +40,11 @@ export function PatientForm() {
     function onSubmit(data: RegisterPatientFormData) {
         registerPatient(data)
             .then(() => {
-                localStorage.setItem("email", data.email)
+                localStorage.removeItem("email-patient")
+                localStorage.removeItem("email-psychologist")
+                localStorage.removeItem("role")
+                localStorage.setItem("email-patient", data.email)
+                localStorage.setItem("role", "patient")
                 showToast("success", "Cadastro realizado com sucesso!", {
                     description: "Redirecionando para a validação de código",
                 })
@@ -136,7 +140,7 @@ export function PatientForm() {
                                         <InputGroupAddon align="inline-start">
                                             <InputGroupText className="text-gray-700 font-semibold">+55</InputGroupText>
                                         </InputGroupAddon>
-                                        <Input {...field} id="phone_number" type="tel" autoComplete="tel" placeholder="(99) 99999-9999" onChange={(e) => field.onChange(maskPhone(e.target.value))} maxLength={15} />
+                                        <Input {...field} id="phone_number" type="tel" autoComplete="tel" placeholder="(99) 99999-9999" onChange={(e) => field.onChange(maskPhone(e.target.value))} maxLength={13} />
                                     </InputGroup>
                                 </div>
                                 </FormControl>

@@ -94,7 +94,7 @@ export const patientSchema = z.object({
       .min(8, "Senha fraca, utilize letras e números")
       .refine((val) => /[0-9]/.test(val), "Senha deve conter pelo menos um número")
       .refine((val) => /[A-Za-z]/.test(val), "Senha deve conter pelo menos uma letra")
-      .refine((val) => /[\_!@#$%^&*+~=\.\-]/.test(val), "Senha deve conter pelo menos um caractere especial"),
+      .refine((val) => /[\_!@#$%^&*+~=\.\;\-]/.test(val), "Senha deve conter pelo menos um caractere especial"),
     confirm_password: z
       .string()
       .nonempty("Confirmar senha é obrigatório"),
@@ -106,7 +106,7 @@ export const patientSchema = z.object({
 }).refine((data) => {
     return data.password === data.confirm_password
   }, {
-      path: ["confirmPassword"],
+      path: ["confirm_password"],
       message: "As senhas não coincidem",
       when(payload) { 
         return patientSchema
@@ -126,7 +126,7 @@ export const psychologistSchema = patientSchema.safeExtend({
     about_you: z.
       string()
       .trim()
-      .nonempty("Experiência profissional é obrigatória"),
+      .nonempty("Descrição é obrigatória"),
     education_and_specializations: z
       .string()
       .trim()
@@ -154,15 +154,15 @@ export const resetPasswordSchema = z.object({
     .refine((val) => /[0-9]/.test(val), "Senha deve conter pelo menos um número")
     .refine((val) => /[A-Za-z]/.test(val), "Senha deve conter pelo menos uma letra")
     .refine((val) => /[\_!@#$%^&*+~=\.\-]/.test(val), "Senha deve conter pelo menos um caractere especial"),
-  confirmPassword: z
+  confirm_password: z
     .string()
     .nonempty("Confirmar senha é obrigatório"),
-}).refine((data) => data.password === data.confirmPassword, {
+}).refine((data) => data.password === data.confirm_password, {
     message: "As senhas não coincidem",
-    path: ["confirmPassword"],
+    path: ["confirm_password"],
     when(payload) { 
       return resetPasswordSchema
-      .pick({ password: true, confirmPassword: true })
+      .pick({ password: true, confirm_password: true })
       .safeParse(payload.value).success
     },  
 })

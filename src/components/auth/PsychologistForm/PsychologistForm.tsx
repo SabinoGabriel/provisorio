@@ -46,13 +46,17 @@ export function PsychologistForm() {
     function onSubmit(data: RegisterPsychologistFormData) {
         registerPsychologist(data)
             .then(() => {
+                localStorage.removeItem("email-patient")
+                localStorage.removeItem("email-psychologist")
+                localStorage.removeItem("role")
+                localStorage.setItem("email-psychologist", data.email)
+                localStorage.setItem("role", "psychologist")
                 showToast("success", "Cadastro realizado com sucesso!", {
                     description: "Redirecionando para a validação de código",
                 })
                 setTimeout(() => router.push('/email-confirm'), 1200)
             })
             .catch(error => {
-                console.log('Erro no cadastro de psicólogo:', error)
                 showToast("error", "Erro", {
                     description: error.message
                 })

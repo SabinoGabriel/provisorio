@@ -34,7 +34,7 @@ export async function registerPatient({
         phone_number,
         password,
         how_found_us,
-        birth_date: birth_date.toISOString().split('T')[0],
+        birth_date,
     })
         .then(response => {
             console.log('Register Patient response:', response)
@@ -74,7 +74,7 @@ export async function registerPsychologist({
         about_you,
         education_and_specializations,
         platform_expectations,
-        birth_date: birth_date.toISOString().split('T')[0],
+        birth_date,
     })
         .then(response => {
             console.log('Register Psychologist response:', response)

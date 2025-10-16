@@ -14,9 +14,11 @@ import { verifyEmail } from "@/services/auth"
 import { RecoveryCodeFormData } from "@/types/form"
 import { RecoveryCodeForm } from "@/types/auth"
 
-
-export function EmailConfirmForm() {
+export function EmailConfirmForm({ role }: { role: string }) {
   const router = useRouter()
+  const email = localStorage.getItem(`${role}`) === 'patient' ? 
+    localStorage.getItem('email-patient') : 
+    localStorage.getItem('email-psychologist')
   
   // Validação via Zod e react-hook-form
   const codeInput = useForm<RecoveryCodeFormData>({
@@ -27,8 +29,10 @@ export function EmailConfirmForm() {
     },
   })
   
+  // Submissão do formulário
   function onSubmit(data: RecoveryCodeForm) {
-    const email = localStorage.getItem('email') || ''
+    if(!email) return
+    
     verifyEmail(email, data.code)
       .then(() => {
         showToast("success", "Sucesso", {
@@ -73,12 +77,12 @@ export function EmailConfirmForm() {
                 <FormControl>
                   <InputOTP {...field} maxLength={6}>
                     <InputOTPGroup>
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={0} />
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={1} />
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={2} />
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={3} />
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={4} />
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={5} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={0} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={1} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={2} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={3} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={4} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={5} />
                     </InputOTPGroup>
                   </InputOTP>
                 </FormControl>

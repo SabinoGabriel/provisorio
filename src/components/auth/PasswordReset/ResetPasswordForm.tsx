@@ -20,7 +20,7 @@ export function ResetPasswordForm() {
     mode: "all",
     defaultValues: {
       password: "",
-      confirmPassword: "",
+      confirm_password: "",
     },
   })
 
@@ -81,14 +81,14 @@ export function ResetPasswordForm() {
           {/* Entrada - Nova Senha */}
           <FormField 
             control={form.control}
-            name="confirmPassword"
+            name="confirm_password"
             render={({ field }) => (
               <FormItem className="w-[32rem]">
                   <FormControl>
                     <div className="w-full">
-                        <FormLabel htmlFor="confirmPassword">Confirmar senha <span className="text-destructive">*</span></FormLabel>
+                        <FormLabel htmlFor="confirm_password">Confirmar senha <span className="text-destructive">*</span></FormLabel>
                         <PasswordField
-                          id="confirmPassword"
+                          id="confirm_password"
                           placeholder="Digite sua nova senha"
                           {...field}
                         />
