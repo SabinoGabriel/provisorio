@@ -16,13 +16,13 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
         {/* Entrada - Nome Completo */}
         <FormField 
             control={form.control}
-            name="fullName"
+            name="name"
             render={({ field }) => (
                 <FormItem className="col-span-2 self-start">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="fullName">Nome Completo <span className="text-red-500">*</span></FormLabel>
-                            <Input {...field} id="fullName" type="text" placeholder="Informe seu nome completo" />
+                            <FormLabel htmlFor="name">Nome Completo <span className="text-destructive">*</span></FormLabel>
+                            <Input {...field} id="name" autoComplete="name" placeholder="Informe seu nome completo" />
                         </div>
                     </FormControl>
                     <FormMessage />
@@ -33,13 +33,13 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
         {/* Entrada - Nome Social */}
         <FormField 
             control={form.control}
-            name="socialName"
+            name="chosen_name"
             render={({ field }) => (
                 <FormItem className="col-span-1 self-start">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="socialName">Como você gostaria de ser chamado?</FormLabel>
-                            <Input {...field} id="socialName" placeholder="Informe seu nome social" />
+                            <FormLabel htmlFor="chosen_name">Como você gostaria de ser chamado?</FormLabel>
+                            <Input {...field} id="chosen_name" placeholder="Informe seu nome social" />
                         </div>
                     </FormControl>
                     <FormMessage />
@@ -55,19 +55,19 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
                 <FormItem className="col-span-1 self-start">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="gender">Com qual gênero você se identifica? <span className="text-red-500">*</span></FormLabel>
+                            <FormLabel htmlFor="gender">Com qual gênero você se identifica? <span className="text-destructive">*</span></FormLabel>
                             <Select {...field} onValueChange={field.onChange} value={field.value || ""}>
                                 <SelectTrigger id="gender" className="w-full">
                                     <SelectValue placeholder="Selecione" />
                                 </SelectTrigger>
                                 <SelectContent onCloseAutoFocus={() => form.trigger("gender")}>
-                                    <SelectItem value="woman">Mulher cis</SelectItem>
-                                    <SelectItem value="man">Homem cis</SelectItem>
-                                    <SelectItem value="trans-woman">Mulher trans</SelectItem>
-                                    <SelectItem value="trans-man">Homem trans</SelectItem>
-                                    <SelectItem value="non-binary">Não-binárie</SelectItem>
-                                    <SelectItem value="other">Outro</SelectItem>
-                                    <SelectItem value="none">Prefiro não informar</SelectItem>
+                                    <SelectItem value="CIS_WOMAN">Mulher cis</SelectItem>
+                                    <SelectItem value="CIS_MAN">Homem cis</SelectItem>
+                                    <SelectItem value="TRANS_WOMAN">Mulher trans</SelectItem>
+                                    <SelectItem value="TRANS_MAN">Homem trans</SelectItem>
+                                    <SelectItem value="NON_BINARY">Não-binárie</SelectItem>
+                                    <SelectItem value="OTHER">Outro</SelectItem>
+                                    <SelectItem value="PREFER_NOT_TO_SAY">Prefiro não informar</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -80,17 +80,17 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
         {/* Entrada - Telefone */}
         <FormField 
             control={form.control}
-            name="phone"
+            name="phone_number"
             render={({ field }) => (
                 <FormItem className="col-span-1 self-start">
                     <FormControl>
                     <div>
-                        <FormLabel htmlFor="phone">Telefone <span className="text-red-500">*</span></FormLabel>
+                        <FormLabel htmlFor="phone_number">Telefone <span className="text-destructive">*</span></FormLabel>
                         <InputGroup className="gap-2">
                             <InputGroupAddon align="inline-start">
                                 <InputGroupText className="text-gray-700 font-semibold">+55</InputGroupText>
                             </InputGroupAddon>
-                            <Input {...field} id="phone" type="tel" autoComplete="tel" placeholder="(99) 99999-9999" onChange={(e) => field.onChange(maskPhone(e.target.value))} maxLength={15} />
+                            <Input {...field} id="phone_number" type="tel" autoComplete="tel" placeholder="(99) 99999-9999" onChange={(e) => field.onChange(maskPhone(e.target.value))} maxLength={15} />
                         </InputGroup>
                     </div>
                     </FormControl>
@@ -102,15 +102,15 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
         {/* Entrada - Data de Nascimento */}
         <FormField 
             control={form.control}
-            name="birthDate"
+            name="birth_date"
             render={({ field }) => (
                 <FormItem className="col-span-1 self-start">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="birthDate">Data de Nascimento <span className="text-red-500">*</span></FormLabel>
+                            <FormLabel htmlFor="birth_date">Data de Nascimento <span className="text-destructive">*</span></FormLabel>
                             <Input
                                 {...field} 
-                                id="birthDate"
+                                id="birth_date"
                                 type="date"
                                 value={field.value ? field.value.toISOString().split("T")[0] : ""}
                                 onChange={(e) => field.onChange(e.target.value ? new Date(e.target.value) : undefined)}
@@ -130,7 +130,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
             <FormItem className="col-span-1 self-start">
                 <FormControl>
                 <div>
-                    <FormLabel htmlFor="cpf">CPF <span className="text-red-500">*</span></FormLabel>
+                    <FormLabel htmlFor="cpf">CPF <span className="text-destructive">*</span></FormLabel>
                     <Input {...field} id="cpf" placeholder="999.999.999-99" onChange={(e) => field.onChange(maskCPF(e.target.value))} maxLength={14} />
                 </div>
                 </FormControl>
@@ -147,7 +147,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
                 <FormItem className="col-span-1 self-start">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="email">E-mail <span className="text-red-500">*</span></FormLabel>
+                            <FormLabel htmlFor="email">E-mail <span className="text-destructive">*</span></FormLabel>
                             <Input {...field} id="email" autoComplete="email" placeholder="Informe seu e-mail" />
                         </div>
                     </FormControl>
@@ -164,7 +164,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
                 <FormItem className="col-span-1 self-start">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="password">Senha <span className="text-red-500">*</span></FormLabel>
+                            <FormLabel htmlFor="password">Senha <span className="text-destructive">*</span></FormLabel>
                             <PasswordField id="password" {...field} placeholder="Informe sua senha" />
                         </div>
                     </FormControl>
@@ -176,13 +176,13 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
         {/* Entrada - Confirmar Senha */}
         <FormField 
             control={form.control}
-            name="confirmPassword"
+            name="confirm_password"
             render={({ field }) => (
                 <FormItem className="col-span-1 self-start">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="confirmPassword">Confirmar Senha <span className="text-red-500">*</span></FormLabel>
-                            <PasswordField id="confirmPassword" {...field} placeholder="Confirme sua senha" />
+                            <FormLabel htmlFor="confirm_password">Confirmar Senha <span className="text-destructive">*</span></FormLabel>
+                            <PasswordField id="confirm_password" {...field} placeholder="Confirme sua senha" />
                         </div>
                     </FormControl>
                     <FormMessage />

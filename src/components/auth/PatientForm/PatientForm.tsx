@@ -12,6 +12,8 @@ import { maskPhone, maskCPF } from "@/utils/masks/masks"
 import { InputGroup, InputGroupAddon, InputGroupText } from "@/components/ui/InputGroup"
 import { showToast } from "@/components/ui/Toast"
 import { PatientFormData, patientSchema } from "@/types/form"
+import { registerPatient } from "@/services/auth"
+import { RegisterPatientFormData } from "@/types/auth"
 
 export function PatientForm() {
     const router = useRouter()
@@ -21,31 +23,38 @@ export function PatientForm() {
         resolver: zodResolver(patientSchema),
         mode: "all",
         defaultValues: {
-        fullName: "",
-            phone: "",
-            socialName: "",
+            name: "",
+            phone_number: "",
+            chosen_name: "",
             cpf: "",
-            birthDate: undefined,
+            birth_date: undefined,
             gender: undefined,
             email: "",
             password: "",
-            confirmPassword: "",
-            howFoundUs: undefined,
+            confirm_password: "",
+            how_found_us: undefined,
         }
     })
 
-    async function onSubmit() {
-        console.log("Paciente:", patientForm.getValues())
-        patientForm.trigger().then((isValid) => {
-            if (isValid) { 
+    // Submissão do formulário
+    function onSubmit(data: RegisterPatientFormData) {
+        registerPatient(data)
+            .then(() => {
+                localStorage.removeItem("email-patient")
+                localStorage.removeItem("email-psychologist")
+                localStorage.removeItem("role")
+                localStorage.setItem("email-patient", data.email)
+                localStorage.setItem("role", "patient")
                 showToast("success", "Cadastro realizado com sucesso!", {
                     description: "Redirecionando para a validação de código",
                 })
-                setTimeout(() => router.push('/email-confirm'), 2000)
-            } 
-        })
-
-
+                setTimeout(() => router.push('/email-confirm'), 1200)
+            })
+            .catch(error => {
+                showToast("error", "Erro", {
+                    description: error.message
+                })
+            })
     }
 
     return (
@@ -57,13 +66,13 @@ export function PatientForm() {
                     {/* Entrada - Nome Completo */}
                     <FormField 
                         control={patientForm.control}
-                        name="fullName"
+                        name="name"
                         render={({ field }) => (
                             <FormItem className="col-span-2 self-start">
                                 <FormControl>
                                 <div>
-                                    <FormLabel htmlFor="fullName">Nome Completo <span className="text-red-500">*</span></FormLabel>
-                                    <Input {...field} id="fullName" type="text" placeholder="Informe seu nome completo" />
+                                    <FormLabel htmlFor="name">Nome Completo <span className="text-destructive">*</span></FormLabel>
+                                    <Input {...field} id="name" autoComplete="name" placeholder="Informe seu nome completo" />
                                 </div>
                                 </FormControl>
                                 <FormMessage />
@@ -74,13 +83,13 @@ export function PatientForm() {
                     {/* Entrada - Nome Social */}
                     <FormField 
                         control={patientForm.control}
-                        name="socialName"
+                        name="chosen_name"
                         render={({ field }) => (
                         <FormItem className="col-span-1 self-start">
                             <FormControl>
                             <div>
-                                <FormLabel htmlFor="socialName">Como você gostaria de ser chamado?</FormLabel>
-                                <Input {...field} id="socialName" placeholder="Informe seu nome social" />
+                                <FormLabel htmlFor="chosen_name">Como você gostaria de ser chamado?</FormLabel>
+                                <Input {...field} id="chosen_name" placeholder="Informe seu nome social" />
                             </div>
                             </FormControl>
                             <FormMessage />
@@ -96,19 +105,19 @@ export function PatientForm() {
                             <FormItem className="col-span-1 self-start">
                                 <FormControl>
                                 <div>
-                                    <FormLabel htmlFor="gender">Com qual gênero você se identifica? <span className="text-red-500">*</span></FormLabel>
+                                    <FormLabel htmlFor="gender">Com qual gênero você se identifica? <span className="text-destructive">*</span></FormLabel>
                                     <Select {...field} onValueChange={field.onChange} value={field.value || ""}>
                                     <SelectTrigger id="gender">
                                         <SelectValue placeholder="Selecione" />
                                     </SelectTrigger>
                                     <SelectContent onCloseAutoFocus={() => patientForm.trigger("gender")}>
-                                        <SelectItem value="woman">Mulher cis</SelectItem>
-                                        <SelectItem value="man">Homem cis</SelectItem>
-                                        <SelectItem value="trans-woman">Mulher trans</SelectItem>
-                                        <SelectItem value="trans-man">Homem trans</SelectItem>
-                                        <SelectItem value="non-binary">Não-binárie</SelectItem>
-                                        <SelectItem value="other">Outro</SelectItem>
-                                        <SelectItem value="none">Prefiro não informar</SelectItem>
+                                        <SelectItem value="CIS_WOMAN">Mulher cis</SelectItem>
+                                        <SelectItem value="CIS_MAN">Homem cis</SelectItem>
+                                        <SelectItem value="TRANS_WOMAN">Mulher trans</SelectItem>
+                                        <SelectItem value="TRANS_MAN">Homem trans</SelectItem>
+                                        <SelectItem value="NON_BINARY">Não-binárie</SelectItem>
+                                        <SelectItem value="OTHER">Outro</SelectItem>
+                                        <SelectItem value="PREFER_NOT_TO_SAY">Prefiro não informar</SelectItem>
                                     </SelectContent>
                                     </Select>
                                 </div>
@@ -121,17 +130,17 @@ export function PatientForm() {
                     {/* Entrada - Telefone */}
                     <FormField 
                         control={patientForm.control}
-                        name="phone"
+                        name="phone_number"
                         render={({ field }) => (
                             <FormItem className="col-span-1 self-start">
                                 <FormControl>
                                 <div>
-                                    <FormLabel htmlFor="phone">Telefone <span className="text-red-500">*</span></FormLabel>
+                                    <FormLabel htmlFor="phone_number">Telefone <span className="text-destructive">*</span></FormLabel>
                                    <InputGroup className="gap-2">
                                         <InputGroupAddon align="inline-start">
                                             <InputGroupText className="text-gray-700 font-semibold">+55</InputGroupText>
                                         </InputGroupAddon>
-                                        <Input {...field} id="phone" type="tel" autoComplete="tel" placeholder="(99) 99999-9999" onChange={(e) => field.onChange(maskPhone(e.target.value))} maxLength={15} />
+                                        <Input {...field} id="phone_number" type="tel" autoComplete="tel" placeholder="(99) 99999-9999" onChange={(e) => field.onChange(maskPhone(e.target.value))} maxLength={13} />
                                     </InputGroup>
                                 </div>
                                 </FormControl>
@@ -143,15 +152,15 @@ export function PatientForm() {
                     {/* Entrada - Data de Nascimento */}
                     <FormField 
                         control={patientForm.control}
-                        name="birthDate"
+                        name="birth_date"
                         render={({ field }) => (
                             <FormItem className="col-span-1 self-start">
                                 <FormControl>
                                 <div className="w-full">
-                                    <FormLabel htmlFor="birthDate">Data de Nascimento <span className="text-red-500">*</span></FormLabel>
+                                    <FormLabel htmlFor="birth_date">Data de Nascimento <span className="text-destructive">*</span></FormLabel>
                                     <Input
                                         {...field} 
-                                        id="birthDate"
+                                        id="birth_date"
                                         type="date"
                                         value={field.value ? field.value.toISOString().split("T")[0] : ""}
                                         onChange={(e) => field.onChange(e.target.value ? new Date(e.target.value) : undefined)}
@@ -171,7 +180,7 @@ export function PatientForm() {
                         <FormItem className="col-span-1 self-start">
                             <FormControl>
                             <div>
-                                <FormLabel htmlFor="cpf">CPF <span className="text-red-500">*</span></FormLabel>
+                                <FormLabel htmlFor="cpf">CPF <span className="text-destructive">*</span></FormLabel>
                                 <Input {...field} id="cpf" placeholder="999.999.999-99" onChange={(e) => field.onChange(maskCPF(e.target.value))} maxLength={14} />
                             </div>
                             </FormControl>
@@ -183,21 +192,21 @@ export function PatientForm() {
                     {/* Entrada - Como nos encontrou? */}
                     <FormField 
                         control={patientForm.control}
-                        name="howFoundUs"
+                        name="how_found_us"
                         render={({ field }) => (
                             <FormItem className="col-span-1 self-start">
                                 <FormControl>
                                     <div>
-                                        <FormLabel htmlFor="howFoundUs">Como você nos conheceu? <span className="text-red-500">*</span></FormLabel>
+                                        <FormLabel htmlFor="how_found_us">Como você nos conheceu? <span className="text-destructive">*</span></FormLabel>
                                         <Select {...field} onValueChange={field.onChange} value={field.value || ""}>
-                                            <SelectTrigger id="howFoundUs">
+                                            <SelectTrigger id="how_found_us">
                                                 <SelectValue placeholder="Selecione" />
                                             </SelectTrigger>
-                                            <SelectContent onCloseAutoFocus={() => patientForm.trigger("howFoundUs")}>
-                                                <SelectItem value="google">Google</SelectItem>
-                                                <SelectItem value="instagram">Instagram</SelectItem>
-                                                <SelectItem value="facebook">Facebook</SelectItem>
-                                                <SelectItem value="other">Outro</SelectItem>
+                                            <SelectContent onCloseAutoFocus={() => patientForm.trigger("how_found_us")}>
+                                                <SelectItem value="GOOGLE">Google</SelectItem>
+                                                <SelectItem value="INSTAGRAM">Instagram</SelectItem>
+                                                <SelectItem value="FACEBOOK">Facebook</SelectItem>
+                                                <SelectItem value="OTHER">Outro</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
@@ -215,7 +224,7 @@ export function PatientForm() {
                             <FormItem className="col-span-2 self-start">
                                 <FormControl>
                                     <div>
-                                        <FormLabel htmlFor="email">E-mail <span className="text-red-500">*</span></FormLabel>
+                                        <FormLabel htmlFor="email">E-mail <span className="text-destructive">*</span></FormLabel>
                                         <Input {...field} id="email" autoComplete="email" placeholder="Informe seu e-mail" />
                                     </div>
                                 </FormControl>
@@ -232,7 +241,7 @@ export function PatientForm() {
                             <FormItem className="col-span-1 self-start">
                                 <FormControl>
                                     <div>
-                                        <FormLabel htmlFor="password">Senha <span className="text-red-500">*</span></FormLabel>
+                                        <FormLabel htmlFor="password">Senha <span className="text-destructive">*</span></FormLabel>
                                         <PasswordField id="password" {...field} placeholder="Informe sua senha" />
                                     </div>
                                 </FormControl>
@@ -244,13 +253,13 @@ export function PatientForm() {
                     {/* Entrada -Confirmar Senha */}
                     <FormField 
                         control={patientForm.control}
-                        name="confirmPassword"
+                        name="confirm_password"
                         render={({ field }) => (
                             <FormItem className="col-span-1 self-start">
                                 <FormControl>
                                     <div>
-                                        <FormLabel htmlFor="confirmPassword">Confirmar Senha <span className="text-red-500">*</span></FormLabel>
-                                        <PasswordField id="confirmPassword" {...field} placeholder="Confirme sua senha" />
+                                        <FormLabel htmlFor="confirm_password">Confirmar Senha <span className="text-destructive">*</span></FormLabel>
+                                        <PasswordField id="confirm_password" {...field} placeholder="Confirme sua senha" />
                                     </div>
                                 </FormControl>
                                 <FormMessage />

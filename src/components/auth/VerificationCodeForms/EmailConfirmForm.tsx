@@ -9,11 +9,17 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/Form"
 import { showToast } from "@/components/ui/Toast"
-import { verificationCodeSchema, RecoveryCodeFormData } from "@/types/form"
+import { verificationCodeSchema } from "@/types/form"
+import { verifyEmail } from "@/services/auth"
+import { RecoveryCodeFormData } from "@/types/form"
+import { RecoveryCodeForm } from "@/types/auth"
 
-export function EmailConfirmForm() {
+export function EmailConfirmForm({ role }: { role: string }) {
   const router = useRouter()
-
+  const email = localStorage.getItem(`${role}`) === 'patient' ? 
+    localStorage.getItem('email-patient') : 
+    localStorage.getItem('email-psychologist')
+  
   // Validação via Zod e react-hook-form
   const codeInput = useForm<RecoveryCodeFormData>({
     resolver: zodResolver(verificationCodeSchema),
@@ -22,37 +28,23 @@ export function EmailConfirmForm() {
       code: "",
     },
   })
-
-  // simula uma chamada à API para reenviar o código
-  const fakeResend = () =>
-    // substitua por fetch/axios para a sua rota real
-    new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 800))
-
-  const handleResendCode = async () => {
-    try {
-      const success = await fakeResend()
-      if (success) {
-        showToast("info", "Um novo código de validação foi enviado para o seu e-mail.", {
-          description: "Verifique sua caixa de entrada (ou spam).",
+  
+  // Submissão do formulário
+  function onSubmit(data: RecoveryCodeForm) {
+    if(!email) return
+    
+    verifyEmail(email, data.code)
+      .then(() => {
+        showToast("success", "Sucesso", {
+          description: "E-mail validado, redirecionando para login..."
         })
-      } else {
-        showToast("error", "Não foi possível enviar o código. Tente novamente.")
-      }
-    } catch (error) {
-      console.error(error)
-      showToast("error", "Erro ao reenviar o código. Verifique sua conexão.")
-    }
-  }
-
-  const onSubmitCode = () => {
-    codeInput.trigger().then((isValid) => {
-      if (isValid) {
-        showToast("success", "Validação realizada com sucesso! Redirecionando para o login...", {
-          description: "Redirecionando para o login",
+        setTimeout(() => router.push('/login'), 1200)
+      })
+      .catch(error => {
+        showToast("error", "Erro", {
+          description: error.message
         })
-        setTimeout(() => router.push('/login'), 2000)
-      }
-    })
+      })
   }
 
   return (
@@ -76,7 +68,7 @@ export function EmailConfirmForm() {
       </div>
 
       <Form {...codeInput}>
-        <form onSubmit={codeInput.handleSubmit(onSubmitCode)} className="flex flex-col justify-between items-center h-[12.5rem]">
+        <form onSubmit={codeInput.handleSubmit(onSubmit)} className="flex flex-col justify-between items-center h-[12.5rem]">
           <FormField
             control={codeInput.control}
             name="code"
@@ -85,12 +77,12 @@ export function EmailConfirmForm() {
                 <FormControl>
                   <InputOTP {...field} maxLength={6}>
                     <InputOTPGroup>
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={0} />
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={1} />
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={2} />
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={3} />
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={4} />
-                        <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={5} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={0} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={1} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={2} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={3} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={4} />
+                      <InputOTPSlot className={codeInput.formState.errors.code ? "border-red-300" : ""} index={5} />
                     </InputOTPGroup>
                   </InputOTP>
                 </FormControl>
@@ -108,7 +100,7 @@ export function EmailConfirmForm() {
                 type="button"
                 variant="link"
                 className="p-0 h-auto text-blue font-semibold"
-                onClick={handleResendCode}
+                // onClick={handleResendCode}
               >
                 Enviar novamente
               </Button>

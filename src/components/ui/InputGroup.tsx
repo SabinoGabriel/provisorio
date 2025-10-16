@@ -149,7 +149,7 @@ function InputGroupTextarea({
     <Textarea
       id={props.id}
       className={cn(
-        "h-6",
+        "min-h-6 h-auto",
         className
       )}
       {...props}

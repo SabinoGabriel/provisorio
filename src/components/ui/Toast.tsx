@@ -18,26 +18,26 @@ export const showToast = (
 
   toast(message, {
     description: options?.description,
-    duration: options?.duration ?? 10000,
+    duration: options?.duration ?? 1200,
     icon: (
       <Image
         src={`/images/icon-${type}.svg`}
         alt={`Ícone de ${type}`}
-        width={48}
-        height={48}
-        className="!w-12 !h-12 !max-w-12 !max-h-12 object-cover"
+        width={20}
+        height={20}
+        className="!w-12 !h-12 !max-w-12 !max-h-12 !object-contain !py-2 !m-0 !self-start"
       />
     ),
     className: `
-      border-none shadow-md font-medium text-sm w-full flex items-center !gap-10 p-0
+      border-none shadow-md w-full flex !items-start !min-h-12 !gap-6 !py-0 !h-fit !px-1
       ${
         type === "success"
-          ? "!text-green-800"
+          ? "!text-green-600"
           : type === "error"
-          ? "!text-red-800"
+          ? "!text-red-600"
           : type === "info"
-          ? "!text-blue-800"
-          : "!text-yellow-800"
+          ? "!text-blue-600"
+          : "!text-yellow-600"
       }
     `,
   })
