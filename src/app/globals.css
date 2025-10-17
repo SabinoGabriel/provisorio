@@ -66,15 +66,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px var(--input) inset !important; /* substitui a cor */
-  box-shadow: 0 0 0px 1000px var(--input) inset !important;
+  -webkit-box-shadow: 0 0 0 62.5rem var(--input) inset !important; /* 1000px => 62.5rem (16px base) */
+  box-shadow: 0 0 0 62.5rem var(--input) inset !important;
   -webkit-text-fill-color: #606064 !important; /* cor do texto */
 }
 
+[data-sonner-toast][data-styled=true] [data-title] {
+  font-weight: bolder !important;
+}
+
 [data-sonner-toast] [data-description] {
-  color: #606064 !important; 
+  color: #606064 !important;
+  font-size: 12px !important;
 }
 
 [data-sonner-toaster][data-sonner-theme=dark] [data-description] {
-  color: #606064 !important; 
+  color: #606064 !important;
+}
+
+[data-sonner-toast][data-styled=true] [data-content] {
+  align-self: self-start !important;
+  padding: 0.5rem !important;
 }

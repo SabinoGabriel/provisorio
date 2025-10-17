@@ -1,40 +1,91 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/Button"
 import Image from "next/image"
+import { useEffect, useRef, useState } from "react"
+import { usePathname } from "next/navigation"
 
 export default function Topbar() {
+  const pathname = usePathname()
+  const isHome = pathname === "/"
+  const lastY = useRef(0)
+  const [hidden, setHidden] = useState(false)
+
+  useEffect(() => {
+    let ticking = false
+    const update = () => {
+      const y = window.scrollY || 0
+      const delta = y - lastY.current
+      const goingDown = delta > 4
+      const goingUp = delta < -4
+
+      if (y < 8) {
+        if (hidden) setHidden(false)
+      } else if (goingDown && !hidden) {
+        setHidden(true)
+      } else if (goingUp && hidden) {
+        setHidden(false)
+      }
+      lastY.current = y
+    }
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          update()
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [hidden])
+
   return (
-    <div className="fixed top-0 left-0 z-50 w-full h-16 bg-transparent flex items-center justify-between text-primary-foreground shadow-sm px-6">
-      <Image
-        className="w-auto h-auto"
-        src="/images/psicologos-ne.png"
-        alt="Psicólogos no Nordeste - logo"
-        width={175}
-        height={175}
-        priority
-        loading="eager"
-        quality={100}
-      />
-      <div className="flex items-center justify-between gap-8">
-        <Link className="w-full flex items-center justify-center" href="">
-          Início
+    <header
+      className={`topbar ${hidden ? "-translate-y-full" : "translate-y-0"}`}
+      aria-label="Barra de navegação"
+    >
+      <div className="topbar-container">
+        <Link href="/" className="flex items-center gap-3">
+          <span className="relative block topbar-logo">
+            <Image
+              src="/images/psicologos-ne-main-logo.svg"
+              alt="Psicólogos no Nordeste - logo"
+              fill
+              priority
+              className="object-contain"
+              sizes="(max-width: 1280px) 10rem, 10rem"
+            />
+          </span>
         </Link>
-        <Link className="w-full flex items-center justify-center" href="">
-          Sobre
-        </Link>
-        <Link className="w-full flex items-center justify-center" href="">
-          Depoimentos
-        </Link>
-        <Link
-          className="w-full flex items-center justify-center whitespace-nowrap"
-          href=""
-        >
-          Fale Conosco
+
+        {/* Navegação desktop */}
+        <nav className="topbar-nav">
+          <Link
+            className={isHome ? "topbar-link topbar-link-active" : "topbar-link"}
+            href="/"
+            aria-current={isHome ? "page" : undefined}
+          >
+            Início
+          </Link>
+          <Link className="topbar-link" href="/#sobre">
+            Sobre
+          </Link>
+          <Link className="topbar-link" href="/#depoimentos">
+            Depoimentos
+          </Link>
+          <Link className="topbar-link whitespace-nowrap" href="/#contato">
+            Fale Conosco
+          </Link>
+        </nav>
+
+        {/* Botão Entrar */}
+        <Link href="/login" className="shrink-0">
+          <Button className="h-10 px-6">Entrar</Button>
         </Link>
       </div>
-      <Link href="/login">
-        <Button className="w-28">Entrar</Button>
-      </Link>
-    </div>
+    </header>
   )
 }
