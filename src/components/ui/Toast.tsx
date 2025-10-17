@@ -36,7 +36,7 @@ export const showToast = (
           : type === "error"
           ? "!text-red-600"
           : type === "info"
-          ? "!text-blue-600"
+          ? "!text-[]"
           : "!text-yellow-600"
       }
     `,

@@ -26,6 +26,7 @@ export default {
         bluestrong: "var(--blue-strong)",
         bluesoft: "var(--blue-soft)",
         bluemiddle: "var(--blue-middle)",
+        blueinfo: "var(--blue-info)",
         input: "var(--input)",
         borderbutton: "var(--border-button)",
         destructive: "var(--destructive)",

@@ -12,6 +12,7 @@
   --blue: #3D7CDB;               /* links (ex: esqueci senha) */
   --blue-hover: #1C4B9C;         /* hover de link */
   --blue-strong: #195FB5;        /* títulos de login/cadastro */
+  --blue-info: #4D5CA8;         /* toast info */
   
   --blue-soft: #2fbaff;          /* gradiente */
   --blue-middle: #009DEB;        /* gradiente */
