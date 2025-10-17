@@ -1,4 +1,3 @@
-// src/components/auth/RecoveryCodeForm.tsx
 "use client"
 
 import { Button } from "@/components/ui/Button"
@@ -10,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/Form"
 import { showToast } from "@/components/ui/Toast"
-import { verificationCodeSchema, RecoveryCodeFormData } from "@/types/form"
+import { verificationCodeSchema, RecoveryCodeFormData } from "@/schemas/auth/verification-code.schema"
 
 export function RecoveryCodeForm() {
   const router = useRouter()

@@ -11,7 +11,7 @@ import { PasswordField } from "@/components/ui/PasswordField"
 import { maskPhone, maskCPF } from "@/utils/masks/masks"
 import { InputGroup, InputGroupAddon, InputGroupText } from "@/components/ui/InputGroup"
 import { showToast } from "@/components/ui/Toast"
-import { PatientFormData, patientSchema } from "@/types/form"
+import { PatientFormData, patientSchema } from "@/schemas/user/patient.schema"
 import { registerPatient } from "@/services/auth"
 import { RegisterPatientFormData } from "@/types/auth"
 
@@ -40,15 +40,11 @@ export function PatientForm() {
     function onSubmit(data: RegisterPatientFormData) {
         registerPatient(data)
             .then(() => {
-                localStorage.removeItem("email-patient")
-                localStorage.removeItem("email-psychologist")
-                localStorage.removeItem("role")
                 localStorage.setItem("email-patient", data.email)
-                localStorage.setItem("role", "patient")
                 showToast("success", "Cadastro realizado com sucesso!", {
                     description: "Redirecionando para a validação de código",
                 })
-                setTimeout(() => router.push('/email-confirm'), 1200)
+                setTimeout(() => router.push('/email-confirm/paciente'), 1200)
             })
             .catch(error => {
                 showToast("error", "Erro", {

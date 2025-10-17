@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form"
 import { maskPhone, maskCPF } from "@/utils/masks/masks"
 import { PasswordField } from "@/components/ui/PasswordField"
 import { InputGroup, InputGroupAddon, InputGroupText } from "@/components/ui/InputGroup"
-import { PsychologistFormData } from "@/types/form"
+import { PsychologistFormData } from "@/schemas/user/psychologist.schema"
 
 export function StepOne({ form }: { form: ReturnType<typeof useForm<PsychologistFormData>> }) {
   return (
@@ -90,7 +90,7 @@ export function StepOne({ form }: { form: ReturnType<typeof useForm<Psychologist
                             <InputGroupAddon align="inline-start">
                                 <InputGroupText className="text-gray-700 font-semibold">+55</InputGroupText>
                             </InputGroupAddon>
-                            <Input {...field} id="phone_number" type="tel" autoComplete="tel" placeholder="(99) 99999-9999" onChange={(e) => field.onChange(maskPhone(e.target.value))} maxLength={15} />
+                            <Input {...field} id="phone_number" type="tel" autoComplete="tel" placeholder="(99) 99999-9999" onChange={(e) => field.onChange(maskPhone(e.target.value))} maxLength={13} />
                         </InputGroup>
                     </div>
                     </FormControl>

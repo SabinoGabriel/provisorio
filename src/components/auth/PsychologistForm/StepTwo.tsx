@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/Input"
 import { useForm } from "react-hook-form"
 import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from "@/components/ui/InputGroup"
 import { maskCRP } from "@/utils/masks/masks"
-import { PsychologistFormData } from "@/types/form"
+import { PsychologistFormData } from "@/schemas/user/psychologist.schema"
 
 export function StepTwo({ form }: { form: ReturnType<typeof useForm<PsychologistFormData>> }) {
   return (
@@ -37,11 +37,11 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
                 <FormItem className="col-span-2">
                     <FormControl>
                         <div>
-                            <FormLabel htmlFor="about_you">Experiência Profissional <span className="text-destructive">*</span></FormLabel>
+                            <FormLabel htmlFor="about_you">Descrição <span className="text-destructive">*</span></FormLabel>
                             <InputGroup>
                                 <InputGroupTextarea {...field} 
                                     id="about_you"
-                                    placeholder="Conte um pouco sobre sua trajetória profissional"
+                                    placeholder="Conte um pouco sobre você"
                                     maxLength={1000}
                                 />
                                 <InputGroupAddon className="p-0 pr-1 mt-2 mb-1" align="block-end">
@@ -114,20 +114,20 @@ export function StepTwo({ form }: { form: ReturnType<typeof useForm<Psychologist
             render={({ field }) => (
                 <FormItem className="col-span-2">
                     <FormControl>
-                    <div>
-                        <FormLabel htmlFor="how_found_us">Como você nos encontrou? <span className="text-destructive">*</span></FormLabel>
-                        <Select {...field} onValueChange={field.onChange} value={field.value || ""}>
-                            <SelectTrigger id="how_found_us">
-                                <SelectValue placeholder="Selecione" />
-                            </SelectTrigger>
-                            <SelectContent onCloseAutoFocus={() => form.trigger("how_found_us")}>
-                                <SelectItem value="GOOGLE">Google</SelectItem>
-                                <SelectItem value="INSTAGRAM">Instagram</SelectItem>
-                                <SelectItem value="FACEBOOK">Facebook</SelectItem>
-                                <SelectItem value="OTHER">Outro</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
+                        <div>
+                            <FormLabel htmlFor="how_found_us">Como você nos encontrou? <span className="text-destructive">*</span></FormLabel>
+                            <Select {...field} onValueChange={field.onChange} value={field.value || ""}>
+                                <SelectTrigger id="how_found_us">
+                                    <SelectValue placeholder="Selecione" />
+                                </SelectTrigger>
+                                <SelectContent onCloseAutoFocus={() => form.trigger("how_found_us")}>
+                                    <SelectItem value="GOOGLE">Google</SelectItem>
+                                    <SelectItem value="INSTAGRAM">Instagram</SelectItem>
+                                    <SelectItem value="FACEBOOK">Facebook</SelectItem>
+                                    <SelectItem value="OTHER">Outro</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </FormControl>
                     <FormMessage />
                 </FormItem>

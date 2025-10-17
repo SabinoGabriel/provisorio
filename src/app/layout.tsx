@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { Montserrat, Unbounded } from "next/font/google"
 import { Toaster } from "@/components/ui/Sonner"
-import Topbar from "@/components/core/Topbar"
 
 const unbounded = Unbounded({
   variable: "--font-unbounded",
@@ -46,9 +45,8 @@ export default function RootLayout({
             <body
         className={`${unbounded.variable} ${montserrat.variable} font-sans antialiased`}
             >
-        <Topbar />
-                {children}
-                <Toaster />
+              {children}
+              <Toaster />
             </body>
         </html>
     )

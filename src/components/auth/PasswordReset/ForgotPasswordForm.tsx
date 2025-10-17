@@ -8,7 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { emailForgotPasswordSchema, EmailForgotPasswordData } from "@/types/form"
+import { emailForgotPasswordSchema, EmailForgotPasswordData } from "@/schemas/auth/forgot-password.schema"
 
 export function ForgotPasswordForm() {
   const router = useRouter()

@@ -44,7 +44,7 @@ export default function Topbar() {
 
   return (
     <header
-      className={`topbar ${hidden ? "-translate-y-full" : "translate-y-0"}`}
+      className={`topbar fixed w-full ${hidden ? "-translate-y-full" : "translate-y-0"}`}
       aria-label="Barra de navegação"
     >
       <div className="topbar-container">

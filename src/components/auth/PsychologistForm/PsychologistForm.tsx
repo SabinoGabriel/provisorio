@@ -12,7 +12,7 @@ import { StepTwo } from "./StepTwo"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Progress } from "@/components/ui/Progress"
 import { cn } from "@/utils/lib/tailwind-merge"
-import { psychologistSchema, PsychologistFormData } from "@/types/form"
+import { psychologistSchema, PsychologistFormData } from "@/schemas/user/psychologist.schema"
 import { registerPsychologist } from "@/services/auth"
 import { RegisterPsychologistFormData } from "@/types/auth"
 
@@ -46,15 +46,11 @@ export function PsychologistForm() {
     function onSubmit(data: RegisterPsychologistFormData) {
         registerPsychologist(data)
             .then(() => {
-                localStorage.removeItem("email-patient")
-                localStorage.removeItem("email-psychologist")
-                localStorage.removeItem("role")
                 localStorage.setItem("email-psychologist", data.email)
-                localStorage.setItem("role", "psychologist")
                 showToast("success", "Cadastro realizado com sucesso!", {
                     description: "Redirecionando para a validação de código",
                 })
-                setTimeout(() => router.push('/email-confirm'), 1200)
+                setTimeout(() => router.push('/email-confirm/psicologo'), 1200)
             })
             .catch(error => {
                 showToast("error", "Erro", {

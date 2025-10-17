@@ -101,3 +101,16 @@ export async function verifyEmail(email: string, code: string): Promise<Tokens> 
             throw new Error(error.response?.data?.message || 'Erro ao verificar o código. Tente novamente.')
         })
 }
+
+export async function resendCode(email: string) {
+    return api.post('auth/resend-verification-code-email', { 
+        email 
+    })
+        .then(response => {
+            console.log('Resend Code response:', response)
+        })
+        .catch(error => {
+            console.log('Resend error:', error)
+            throw new Error(error.response?.data?.message || 'Erro ao reenviar o código. Tente novamente.')
+        })
+}

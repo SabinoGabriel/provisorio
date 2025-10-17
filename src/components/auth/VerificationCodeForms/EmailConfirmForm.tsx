@@ -9,16 +9,13 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/Form"
 import { showToast } from "@/components/ui/Toast"
-import { verificationCodeSchema } from "@/types/form"
-import { verifyEmail } from "@/services/auth"
-import { RecoveryCodeFormData } from "@/types/form"
+import { verifyEmail, resendCode } from "@/services/auth"
+import { verificationCodeSchema, RecoveryCodeFormData } from "@/schemas/auth/verification-code.schema"
 import { RecoveryCodeForm } from "@/types/auth"
 
 export function EmailConfirmForm({ role }: { role: string }) {
   const router = useRouter()
-  const email = localStorage.getItem(`${role}`) === 'patient' ? 
-    localStorage.getItem('email-patient') : 
-    localStorage.getItem('email-psychologist')
+  const email = localStorage.getItem(`email-${role}`)
   
   // Validação via Zod e react-hook-form
   const codeInput = useForm<RecoveryCodeFormData>({
@@ -39,6 +36,23 @@ export function EmailConfirmForm({ role }: { role: string }) {
           description: "E-mail validado, redirecionando para login..."
         })
         setTimeout(() => router.push('/login'), 1200)
+      })
+      .catch(error => {
+        showToast("error", "Erro", {
+          description: error.message
+        })
+      })
+  }
+
+  // Reenvio de código
+  function onResendCode() {
+    if(!email) return
+
+    resendCode(email)
+      .then(() => {
+        showToast("info", "Novo código reenviado", {
+          description: "Código reenviado para o seu e-mail"
+        })
       })
       .catch(error => {
         showToast("error", "Erro", {
@@ -100,7 +114,7 @@ export function EmailConfirmForm({ role }: { role: string }) {
                 type="button"
                 variant="link"
                 className="p-0 h-auto text-blue font-semibold"
-                // onClick={handleResendCode}
+                onClick={onResendCode}
               >
                 Enviar novamente
               </Button>

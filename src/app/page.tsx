@@ -1,8 +1,10 @@
 import { Card } from "@/components/ui/Card"
+import Topbar from "@/components/core/Topbar"
 
 export default function Home() {
   return (
     <div className="w-full h-screen items-center justify-center flex flex-col space-y-16 p-10">
+      <Topbar />
       <Card>Tela Inicial</Card>
       <footer className="w-full absolute bottom-4 flex flex-col space-y-2 items-center">
         <hr className="w-64" />

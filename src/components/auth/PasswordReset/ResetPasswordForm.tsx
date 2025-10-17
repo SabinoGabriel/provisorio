@@ -9,7 +9,7 @@ import { PasswordField } from "@/components/ui/PasswordField"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { showToast } from "@/components/ui/Toast"
-import { resetPasswordSchema, ResetPasswordFormData } from "@/types/form"
+import { resetPasswordSchema, ResetPasswordFormData } from "@/schemas/auth/reset-password.schema"
 
 export function ResetPasswordForm() {
   const router = useRouter()
