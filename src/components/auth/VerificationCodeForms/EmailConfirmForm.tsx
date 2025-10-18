@@ -33,9 +33,14 @@ export function EmailConfirmForm({ role }: { role: string }) {
     verifyEmail(email, data.code)
       .then(() => {
         showToast("success", "Sucesso", {
-          description: "E-mail validado, redirecionando para login..."
+          description: role === "psychologist"
+            ? "E-mail validado, redirecionando para a próxima etapa..."
+            : "E-mail validado, redirecionando para login..."
         })
-        setTimeout(() => router.push('/login'), 1200)
+        const destination = role === "psychologist"
+          ? '/cadastro/psicologo/sucesso'
+          : '/login'
+        setTimeout(() => router.push(destination), 1200)
       })
       .catch(error => {
         showToast("error", "Erro", {
